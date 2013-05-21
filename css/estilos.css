@@ -1,0 +1,32 @@
+#home img{
+	margin: 5% 0% 25px 25%
+}
+.ui-btn-up-a{
+	color: #000;
+	background-color: #D6D6D6;
+	background-image: none;
+}
+
+.ui-btn-up-a a.ui-link-inherit {
+	color: #000;
+}
+
+.ui-body-a,
+.ui-overlay-a {
+	color: #000;
+	background-color: #3BB5A0;
+	background-image:url(../img/bg.jpg);
+}
+
+.ui-body-a input,
+.ui-body-a select,
+.ui-body-a textarea{
+	color: #000;
+}
+
+input.ui-input-text, textarea.ui-input-text, .ui-input-search { 
+	background-color: #fff !important; 
+	}
+input.ui-input-text { 
+	background-color: #fff !important; 
+}
