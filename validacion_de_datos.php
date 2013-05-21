@@ -43,7 +43,7 @@ $usuarioValido = $usuarioEnviado;
 /* crea un array con datos arbitrarios que seran enviados de vuelta a la aplicacion */
 $resultados = array();
 $resultados["hora"] = date("F j, Y, g:i a"); 
- 
+$resultados["primeravez"] = 0;
  
 /* verifica que el usuario y password concuerden correctamente */
 if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido ){

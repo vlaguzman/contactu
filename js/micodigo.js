@@ -1,11 +1,57 @@
 var user;
 
+$( "#eventos" ).on( "pageshow", function( event, ui ) {
+	archivoEventos = "http://localhost:8888/contactu/demeeventos.php?jsoncallback=?";
+
+	$.getJSON( archivoEventos, { })
+	.done(function(respuestaServer) {
+		
+		if(respuestaServer.validacion == "ok"){
+			var elemento = respuestaServer.registros[0];
+
+			$elmt_li = $('<li data-icon="plus"></li>');
+			element_li = document.createElement('li');
+			$elmt_a = $('<a id="evento-p1" href="#participantes"></a>');
+			$elmt_img = $('<img src="'+elemento['imagen']+'">');
+			$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
+			$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
+			$elmt_span = $('<span id="evento-1" class="ui-li-count">'+elemento['registros']+'</span>');
+			$elmt_a2 = $('<a href="#inactivo" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+			$elmt_a.append($elmt_img);
+			$elmt_a.append($elmt_h4);
+			$elmt_a.append($elmt_p);
+			$elmt_a.append($elmt_span);
+			$elmt_li.append($elmt_a);
+			$elmt_li.append($elmt_a2);
+			$('#lista-eventos').append($elmt_li);
+
+		}else{
+
+		}
+		$("#lista-eventos").listview('refresh');
+  
+	})
+	return false;			
+
+});
+
+// '<li data-icon="plus">
+// 					<a id="evento-p1" href="#participantes">
+// 						<img src="'+elemento["imagen"]+'">
+// 						<h4>'+elemento["nombre"]+'</h4>
+// 						<p>'+elemento["fecha"]+' - '+elemento["hora"]+'</p>
+// 						<span id="evento-0" class="ui-li-count">0</span>
+// 					</a>
+// 				    <a href="#enrolarme" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>
+// 				</li>';
+
 $('#formulario').submit(function() { 
 	// recolecta los valores que inserto el usuario
 	var datosUsuario = $("#nombredeusuario").val();
 	var datosPassword = $("#clave").val();
 
-  	archivoValidacion = "http://www.contactu.co/app/validacion_de_datos.php?jsoncallback=?";
+  	//archivoValidacion = "http://www.contactu.co/app/validacion_de_datos.php?jsoncallback=?";
+	archivoValidacion = "http://localhost:8888/contactu/validacion_de_datos.php?jsoncallback=?";
 	
 	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
 	.done(function(respuestaServer) {
@@ -13,7 +59,10 @@ $('#formulario').submit(function() {
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	user = datosUsuario;
-			$.mobile.changePage("#iniciar");
+		 	if(respuestaServer.primeravez == 1)
+				$.mobile.changePage("#iniciar");
+			else
+				$.mobile.changePage("#eventos");
 			document.getElementById("t-nombre").innerHTML=datosUsuario;
 			document.getElementById("evento-1").innerHTML=respuestaServer.numero;
 		  
