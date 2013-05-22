@@ -6,7 +6,7 @@ $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Err
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
 
 //mysql_set_charset(utf8);
-$consulta = "SELECT id, nombre, descripcion, fecha, hora, lugar, imagen, registros FROM evento";
+$consulta = "SELECT id, nombre, descripcion, fecha, hora, lugar, imagen, estado, registros FROM evento";
 $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
 mysql_close($conexion);
@@ -26,6 +26,7 @@ if($resultado)
 				'hora' => $unRegistro['hora'],
 				'jugar' => $unRegistro['jugar'],
 				'imagen'=> $unRegistro['imagen'],
+				'estado'=> $unRegistro['estado'],
 				'registros'=> $unRegistro['registros'],
 				);
 			

@@ -7,23 +7,28 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	.done(function(respuestaServer) {
 		
 		if(respuestaServer.validacion == "ok"){
-			var elemento = respuestaServer.registros[0];
+			$('#lista-eventos li').remove();
 
-			$elmt_li = $('<li data-icon="plus"></li>');
-			element_li = document.createElement('li');
-			$elmt_a = $('<a id="evento-p1" href="#participantes"></a>');
-			$elmt_img = $('<img src="'+elemento['imagen']+'">');
-			$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
-			$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
-			$elmt_span = $('<span id="evento-1" class="ui-li-count">'+elemento['registros']+'</span>');
-			$elmt_a2 = $('<a href="#inactivo" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
-			$elmt_a.append($elmt_img);
-			$elmt_a.append($elmt_h4);
-			$elmt_a.append($elmt_p);
-			$elmt_a.append($elmt_span);
-			$elmt_li.append($elmt_a);
-			$elmt_li.append($elmt_a2);
-			$('#lista-eventos').append($elmt_li);
+			for (var i = 0; i < respuestaServer.registros.length; i++) {
+				
+				var elemento = respuestaServer.registros[i];
+				$elmt_li = $('<li data-icon="plus"></li>');
+				element_li = document.createElement('li');
+				$elmt_a = $('<a id="evento-'+i+'" href="#participantes"></a>');
+				$elmt_img = $('<img src="'+elemento['imagen']+'">');
+				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
+				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
+				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
+				$elmt_a2 = $('<a href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+				$elmt_a.append($elmt_img);
+				$elmt_a.append($elmt_h4);
+				$elmt_a.append($elmt_p);
+				$elmt_a.append($elmt_span);
+				$elmt_li.append($elmt_a);
+				$elmt_li.append($elmt_a2);
+				$('#lista-eventos').append($elmt_li);
+
+			};
 
 		}else{
 
@@ -35,15 +40,7 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 });
 
-// '<li data-icon="plus">
-// 					<a id="evento-p1" href="#participantes">
-// 						<img src="'+elemento["imagen"]+'">
-// 						<h4>'+elemento["nombre"]+'</h4>
-// 						<p>'+elemento["fecha"]+' - '+elemento["hora"]+'</p>
-// 						<span id="evento-0" class="ui-li-count">0</span>
-// 					</a>
-// 				    <a href="#enrolarme" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>
-// 				</li>';
+
 
 $('#formulario').submit(function() { 
 	// recolecta los valores que inserto el usuario
