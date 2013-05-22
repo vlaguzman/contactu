@@ -101,22 +101,22 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				$('#datos-top article').append($elmt_p2);
 				$('#datos-top article').append($elmt_p3);
 
-				$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
+				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
 
-				$('#datos-q1').append($elmt_hd);
+				//$('#datos-q1').append($elmt_hd);
 				$('#datos-q1').append($elmt_p1);
 
-				$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
-				$elmt_p1 = $('<p>'+elemento['q2']+'</p>');
+				//$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
 
-				$('#datos-q2').append($elmt_hd);
+				//$('#datos-q2').append($elmt_hd);
 				$('#datos-q2').append($elmt_p1);
 
-				$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
-				$elmt_p1 = $('<p>'+elemento['q3']+'</p>');
+				//$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
 
-				$('#datos-q3').append($elmt_hd);
+				//$('#datos-q3').append($elmt_hd);
 				$('#datos-q3').append($elmt_p1);
 
 		}else{

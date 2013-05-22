@@ -10,7 +10,11 @@ mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base d
 //$consulta = sprintf("SELECT t1.id_usuario, t2.nombre, t2.email, t2.areas, t2.img FROM registro AS t1, usuario AS t2
 	//WHERE t1.id_usuario = t2.id AND t1.id_evento=%s", $id_evento);
 
-$consulta = sprintf("SELECT id, nombre, img, avatar, areas, twitter, email from usuario WHERE id='%s'", $id_usuario);
+//$consulta = sprintf("SELECT t1.id, t1.nombre, t1.img, t1.avatar, t1.areas, t1.twitter, t1.email, t2.respuesta FROM usuario AS t1, respuesta AS t2 WHERE t1.id=t2.id_usuario AND t1.id='%s' ", $id_usuario);
+
+
+$consulta = sprintf("SELECT id, nombre, img, avatar, areas, twitter, email from usuario WHERE id='%s' ", $id_usuario);
+
 
 $query_datosusuario = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
@@ -31,12 +35,12 @@ if($query_datosusuario)
 				'area' => $unRegistro['areas'],
 				'twitter' => $unRegistro['twitter'],
 				'correo' => $unRegistro['email'],
-				'q1' => $unRegistro['nombre'],
+				//'q1' => $unRegistro['nombre'],
 				'r1'=> $unRegistro['nombre'],
-				'q2' => $unRegistro['nombre'],
-				'r2'=> $unRegistro['nombre'],
-				'q3' => $unRegistro['nombre'],
-				'r3'=> $unRegistro['nombre'],
+				//'q2' => $unRegistro['nombre'],
+				//'r2'=> $unRegistro['nombre'],
+				//'q3' => $unRegistro['nombre'],
+				//'r3'=> $unRegistro['nombre'],
 
 				);
 		}
