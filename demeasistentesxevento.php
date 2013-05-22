@@ -18,7 +18,7 @@ $registros = array();
 	if(mysql_num_rows($resultado)){
 		while ($unRegistro = mysql_fetch_assoc($resultado)) {
 			$registros[] = array(
-				'id_usuario' => $unRegistro['id'],
+				'id_usuario' => $unRegistro['id_usuario'],
 				'nombre' => $unRegistro['nombre'],
 				'imagen' => $unRegistro['img'],
 				'email' => $unRegistro['email'],

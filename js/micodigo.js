@@ -1,7 +1,7 @@
 var user;
 var id_evento = 0;
 var pos_evento = 0;
-var id_asistente;
+var id_asistente =0;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	//archivoEventos = "http://www.contactu.co/app/contactu/demeeventos.php?jsoncallback=?";
@@ -43,44 +43,87 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 })
 
+
+
 $( "#participantes" ).on( "pageshow", function( event, ui ) {
 	//archivo = "http://www.contactu.co/app/demeasistentesxevento.php?jsoncallback=?";
   	archivoParticipantes = "http://localhost:8888/contactu/demeasistentesxevento.php?jsoncallback=?";
 	
-
 	$.getJSON( archivoParticipantes, {idevento: id_evento})
 	.done(function(respuestaServer) {
-		
 		if(respuestaServer.validacion == "ok"){
 			
 			$('#lista-participantes li').remove();
-
 			for (var i = 0; i < respuestaServer.usuarios.length; i++) {
 				
 				var elemento = respuestaServer.usuarios[i];
 
 				$elmt_lip = $('<li></li>');
 				$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+')" href="#datos">');
-
 				$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
 				$elmt_h4p = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_pp = $('<p>'+elemento['area']+'</p>');
-							
 				$elmt_ap.append($elmt_imgp);
 				$elmt_ap.append($elmt_h4p);
 				$elmt_ap.append($elmt_pp);
-				
 				$elmt_lip.append($elmt_ap);
-				
 				$('#lista-participantes').append($elmt_lip);
-
 			};
 
 		}else{
 
 		}
-		$("#lista-participantes").listview('refresh');
-  
+		$("#lista-participantes").listview('refresh');  
+	})
+	return false;			
+
+})
+
+$( "#datos" ).on( "pageshow", function( event, ui ) {
+	//archivo = "http://www.contactu.co/app/demedatosusuario.php?jsoncallback=?";
+  	archivoParticipantes = "http://localhost:8888/contactu/demedatosusuario.php?jsoncallback=?";
+			
+	$.getJSON( archivoParticipantes, {id_usuario: id_asistente})
+	.done(function(respuestaServer) {
+		if(respuestaServer.validacion == "ok"){
+			
+				var elemento = respuestaServer.datos[0];
+								
+				$('#datos-top img').attr("src", elemento['foto']);
+	
+				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+				$elmt_p2 = $('<p>'+elemento['twitter']+'</p>');
+				$elmt_p3 = $('<p>'+elemento['correo']+'</p>');
+
+				$('#datos-top article').append($elmt_hd);
+				$('#datos-top article').append($elmt_p1);
+				$('#datos-top article').append($elmt_p2);
+				$('#datos-top article').append($elmt_p3);
+
+				$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
+
+				$('#datos-q1').append($elmt_hd);
+				$('#datos-q1').append($elmt_p1);
+
+				$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['q2']+'</p>');
+
+				$('#datos-q2').append($elmt_hd);
+				$('#datos-q2').append($elmt_p1);
+
+				$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['q3']+'</p>');
+
+				$('#datos-q3').append($elmt_hd);
+				$('#datos-q3').append($elmt_p1);
+
+		}else{
+
+		}
+		
+
 	})
 	return false;			
 
