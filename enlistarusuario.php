@@ -23,11 +23,11 @@ if($resultado)
 
 
 //$id_evento = 1;
-$query = sprintf("INSERT INTO registro (id_evento, id_usuario) VALUES (%s,%s)", $id_evento, $id_usuario);
+$query = sprintf("INSERT INTO registro (id_evento, id_usuario) VALUES ('%s','%s')", $id_evento, $id_usuario);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);
 
-$query = sprintf("SELECT COUNT(*) FROM registro WHERE id_evento=%s", $id_evento);
+$query = sprintf("SELECT COUNT(*) FROM registro WHERE id_evento='%s'", $id_evento);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $contador = mysql_query($query);
 
@@ -37,12 +37,16 @@ if($contador)
 			while ($unRegistro = mysql_fetch_assoc($contador)) {
 				$numero = $unRegistro['COUNT(*)'];
 			}
+			$query = sprintf("UPDATE evento SET registros='%s' WHERE id='%s'", $numero, $id_evento);
+			$q_update = mysql_query($query);
 		}
 		else{
 			$numero = 5;
 		}
 	
 	}
+
+
 
 mysql_close($conexion);
 

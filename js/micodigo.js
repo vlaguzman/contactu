@@ -1,6 +1,7 @@
 var user;
 var id_evento = 0;
 var pos_evento = 0;
+var id_asistente;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	//archivoEventos = "http://www.contactu.co/app/contactu/demeeventos.php?jsoncallback=?";
@@ -16,13 +17,12 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				
 				var elemento = respuestaServer.registros[i];
 				$elmt_li = $('<li data-icon="plus"></li>');
-				element_li = document.createElement('li');
-				$elmt_a = $('<a id="evento-a'+i+'" href="#participantes"></a>');
+				$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
 				$elmt_img = $('<img src="'+elemento['imagen']+'">');
 				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
-				$elmt_a2 = $('<a onclick="almaceneIdEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+				$elmt_a2 = $('<a onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
 				$elmt_a.append($elmt_img);
 				$elmt_a.append($elmt_h4);
 				$elmt_a.append($elmt_p);
@@ -41,11 +41,62 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	})
 	return false;			
 
-});
+})
 
-function almaceneIdEvento(ev_id, ref_span){
+$( "#participantes" ).on( "pageshow", function( event, ui ) {
+	//archivo = "http://www.contactu.co/app/demeasistentesxevento.php?jsoncallback=?";
+  	archivoParticipantes = "http://localhost:8888/contactu/demeasistentesxevento.php?jsoncallback=?";
+	
+
+	$.getJSON( archivoParticipantes, {idevento: id_evento})
+	.done(function(respuestaServer) {
+		
+		if(respuestaServer.validacion == "ok"){
+			
+			$('#lista-participantes li').remove();
+
+			for (var i = 0; i < respuestaServer.usuarios.length; i++) {
+				
+				var elemento = respuestaServer.usuarios[i];
+
+				$elmt_lip = $('<li></li>');
+				$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+')" href="#datos">');
+
+				$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
+				$elmt_h4p = $('<h4>'+elemento['nombre']+'</h4>');
+				$elmt_pp = $('<p>'+elemento['area']+'</p>');
+							
+				$elmt_ap.append($elmt_imgp);
+				$elmt_ap.append($elmt_h4p);
+				$elmt_ap.append($elmt_pp);
+				
+				$elmt_lip.append($elmt_ap);
+				
+				$('#lista-participantes').append($elmt_lip);
+
+			};
+
+		}else{
+
+		}
+		$("#lista-participantes").listview('refresh');
+  
+	})
+	return false;			
+
+})
+
+function almaceneIdPosEvento(ev_id, ref_span){
 	id_evento = ev_id;
 	pos_evento = ref_span;
+}
+
+function almaceneIdEvento(ev_id){
+	id_evento = ev_id;
+}
+
+function almaceneIdParticipante(id_prt){
+	id_asistente = id_prt;
 }
 
 $('#formulario').submit(function() { 
@@ -162,37 +213,3 @@ $('#btn-enrolarme').click(function(){
 	return false;
 });
 
-$('#evento-p1').click(function(){
-	
-	//archivo = "http://www.contactu.co/app/con_asistentesxevento.php?jsoncallback=?";
-  	archivo = "http://localhost:8888/contactu/con_asistentesxevento.php?jsoncallback=?";
-	$.mobile.changePage("#participantes");
-/*	var id_evento = 1;
-	$.getJSON( archivoEnrolarse, {id_evento:id_evento})
-	.done(function(respuestaServer) {
-		
-		if(respuestaServer.validacion == "ok"){
-			alert("ojoooo");
-			$.mobile.changePage("#participantes");
-		 	/// si la validacion es correcta, muestra la pantalla "home"
-		 			document.getElementById("t-ev1").innerHTML = respuestaServer.registros[0].nombre; 
-					document.getElementById("d-ev1").innerHTML = respuestaServer.registros[0].email; 
-
-		}else{
-		  /// ejecutar una conducta cuando la validacion falla
-		}
-  
-	})*/
-
-	
-		
-/*	$.getJSON('archivoEnrolarse', {format: "json"}, function(usuarios) { 
-		alert("registros 0 ");
-		$.mobile.changePage("#participantes");
-		document.getElementById("t-ev1").innerHTML = usuarios[0].nombre; 
-		document.getElementById("d-ev1").innerHTML = usuarios[0].email; 
-	});
-*/
-	return false;
-});
-	

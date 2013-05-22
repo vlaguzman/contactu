@@ -1,7 +1,5 @@
 <?php 
 
-//$conexion = mysql_connect("localhost", "adminwb", "Lounge140") or die ("Error conexión BD");
-//mysql_select_db('wasabi', $conexion)or die('No se encuentra la base de datos');
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
 
@@ -56,11 +54,6 @@ $resultadosJson = json_encode($resultados);
 echo $_GET['jsoncallback'] . '(' . $resultadosJson . ');';
 
 
-
-	
-// 	header('Content-type: application/json; charset=utf-8');
-// 	echo '{"eventos":'.json_encode($registros).'}';
-// 	//echo json_encode($registros);
 
 
 
