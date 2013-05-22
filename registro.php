@@ -28,7 +28,7 @@ $resultados["hora"] = date("F j, Y, g:i a");
 // Check result
 // This shows the actual query sent to MySQL, and the error. Useful for debugging.
 if (!$result) {
-    $resultados["mensaje"] = "Usuario y password incorrectos";
+    $resultados["mensaje"] = "Registro ";
 	$resultados["validacion"] = "error";
 }
 else{

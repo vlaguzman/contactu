@@ -1,6 +1,9 @@
 var user;
+var id_evento = 0;
+var pos_evento = 0;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
+	//archivoEventos = "http://www.contactu.co/app/contactu/demeeventos.php?jsoncallback=?";
 	archivoEventos = "http://localhost:8888/contactu/demeeventos.php?jsoncallback=?";
 
 	$.getJSON( archivoEventos, { })
@@ -14,12 +17,12 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				var elemento = respuestaServer.registros[i];
 				$elmt_li = $('<li data-icon="plus"></li>');
 				element_li = document.createElement('li');
-				$elmt_a = $('<a id="evento-'+i+'" href="#participantes"></a>');
+				$elmt_a = $('<a id="evento-a'+i+'" href="#participantes"></a>');
 				$elmt_img = $('<img src="'+elemento['imagen']+'">');
 				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
-				$elmt_a2 = $('<a href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+				$elmt_a2 = $('<a onclick="almaceneIdEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
 				$elmt_a.append($elmt_img);
 				$elmt_a.append($elmt_h4);
 				$elmt_a.append($elmt_p);
@@ -40,7 +43,10 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 });
 
-
+function almaceneIdEvento(ev_id, ref_span){
+	id_evento = ev_id;
+	pos_evento = ref_span;
+}
 
 $('#formulario').submit(function() { 
 	// recolecta los valores que inserto el usuario
@@ -77,7 +83,10 @@ $('#form-preguntas').submit(function() {
 	var p2 = $("#pregunta2").val();
 	var p3 = $("#pregunta3").val();
 
-  	archivoPreguntas = "http://www.contactu.co/app/insertpreguntas.php?jsoncallback=?";
+  	//archivoPreguntas = "http://www.contactu.co/app/insertpreguntas.php?jsoncallback=?";
+  	archivoPreguntas = "http://localhost:8888/contactu/insertpreguntas.php?jsoncallback=?";
+
+
   	$.mobile.changePage("#eventos");  
 	$.getJSON( archivoPreguntas, {user:user,p1:p1,p2:p2,p3:p3})
 	.done(function(respuestaServer) {
@@ -106,7 +115,10 @@ $('#form-registro').submit(function() {
 	var dPassword = $("#pass").val();
 
 
-  	archivoRegistro = "http://www.contactu.co/app/registro.php?jsoncallback=?";
+  	//archivoRegistro = "http://www.contactu.co/app/registro.php?jsoncallback=?";
+  	archivoRegistro = "http://localhost:8888/contactu/registro.php?jsoncallback=?";
+
+
 	$.mobile.changePage("#home");	
 	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword})
 	.done(function(respuestaServer) {
@@ -127,14 +139,18 @@ $('#form-registro').submit(function() {
 
 $('#btn-enrolarme').click(function(){
 
-	archivoEnrolarse = "http://www.contactu.co/app/enlistarusuario.php?jsoncallback=?";
-  	$.mobile.changePage("#eventos");
-	$.getJSON( archivoEnrolarse, {user:user})
-	.done(function(respuestaServer) {
-		alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora + "Numero: " + respuestaServer.numero);
-		if(respuestaServer.validacion == "ok"){
+//	archivoEnrolarse = "http://www.contactu.co/app/enlistarusuario.php?jsoncallback=?";
+	archivoEnrolarse = "http://localhost:8888/contactu/enlistarusuario.php?jsoncallback=?";
+
+  	alert("Este es el id que vamos a enviar: "+ id_evento);
+	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
+	.done(function(respuesta) {
+		alert(respuesta.mensaje + "Numero: " + respuesta.numero);
+		if(respuesta.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
-		 	document.getElementById("evento-1").innerHTML=respuestaServer.numero;
+		 	id_ev = "evento-"+pos_evento;
+		 	document.getElementById(id_ev).innerHTML=respuesta.numero;
+		 	$.mobile.changePage("#eventos");
 			// document.getElementById("s1").innerHTML=count+1;
 
 		}else{
@@ -148,8 +164,8 @@ $('#btn-enrolarme').click(function(){
 
 $('#evento-p1').click(function(){
 	
-	archivoEnrolarse = "http://www.contactu.co/app/con_asistentesxevento.php?jsoncallback=?";
-  	
+	//archivo = "http://www.contactu.co/app/con_asistentesxevento.php?jsoncallback=?";
+  	archivo = "http://localhost:8888/contactu/con_asistentesxevento.php?jsoncallback=?";
 	$.mobile.changePage("#participantes");
 /*	var id_evento = 1;
 	$.getJSON( archivoEnrolarse, {id_evento:id_evento})

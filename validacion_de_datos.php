@@ -54,7 +54,7 @@ if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido )
  
 }else{
 	/*esta informacion se envia si la validacion falla */
-	$resultados["mensaje"] = "Usuario y password incorrectos";
+	$resultados["mensaje"] = " Aca sí: Usuario y password incorrectos";
 	$resultados["validacion"] = "error";
 }
  

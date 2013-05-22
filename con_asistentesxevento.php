@@ -43,7 +43,7 @@ $resultados = array();
 // Check result
 // This shows the actual query sent to MySQL, and the error. Useful for debugging.
 if (!$result) {
-    $resultados["mensaje"] = "Usuario y password incorrectos";
+    $resultados["mensaje"] = "en con_asistentes";
 	$resultados["validacion"] = "error";
 }
 else{
