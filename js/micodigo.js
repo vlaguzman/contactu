@@ -1,11 +1,22 @@
+
+//const url_base = "http://www.contactu.co/app/contactu/";
+const url_base = "http://localhost:8888/contactu/";
+const url_eventos = "demeeventos.php?jsoncallback=?"
+const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
+const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
+const url_validacionUsuario = "validacion_de_datos.php?jsoncallback=?";
+const url_insertarPreguntas = "insertpreguntas.php?jsoncallback=?"
+const url_registroUsuario = "registro.php?jsoncallback=?";
+const url_enrolarse = "registro.php?jsoncallback=?";
+
 var user;
 var id_evento = 0;
 var pos_evento = 0;
 var id_asistente =0;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
-	//archivoEventos = "http://www.contactu.co/app/contactu/demeeventos.php?jsoncallback=?";
-	archivoEventos = "http://localhost:8888/contactu/demeeventos.php?jsoncallback=?";
+
+	archivoEventos = url_base + url_eventos;
 
 	$.getJSON( archivoEventos, { })
 	.done(function(respuestaServer) {
@@ -46,8 +57,8 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 
 $( "#participantes" ).on( "pageshow", function( event, ui ) {
-	//archivo = "http://www.contactu.co/app/demeasistentesxevento.php?jsoncallback=?";
-  	archivoParticipantes = "http://localhost:8888/contactu/demeasistentesxevento.php?jsoncallback=?";
+
+  	archivoParticipantes = url_base + url_asistentes;
 	
 	$.getJSON( archivoParticipantes, {idevento: id_evento})
 	.done(function(respuestaServer) {
@@ -80,10 +91,9 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 })
 
 $( "#datos" ).on( "pageshow", function( event, ui ) {
-	//archivo = "http://www.contactu.co/app/demedatosusuario.php?jsoncallback=?";
-  	archivoParticipantes = "http://localhost:8888/contactu/demedatosusuario.php?jsoncallback=?";
+  	archivoParticipante = url_base + url_datosParticipante;
 			
-	$.getJSON( archivoParticipantes, {id_usuario: id_asistente})
+	$.getJSON( archivoParticipante, {id_usuario: id_asistente})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
@@ -147,8 +157,7 @@ $('#formulario').submit(function() {
 	var datosUsuario = $("#nombredeusuario").val();
 	var datosPassword = $("#clave").val();
 
-  	//archivoValidacion = "http://www.contactu.co/app/validacion_de_datos.php?jsoncallback=?";
-	archivoValidacion = "http://localhost:8888/contactu/validacion_de_datos.php?jsoncallback=?";
+  	archivoValidacion = url_base + url_validacionUsuario;
 	
 	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
 	.done(function(respuestaServer) {
@@ -177,9 +186,7 @@ $('#form-preguntas').submit(function() {
 	var p2 = $("#pregunta2").val();
 	var p3 = $("#pregunta3").val();
 
-  	//archivoPreguntas = "http://www.contactu.co/app/insertpreguntas.php?jsoncallback=?";
-  	archivoPreguntas = "http://localhost:8888/contactu/insertpreguntas.php?jsoncallback=?";
-
+  	archivoPreguntas = url_base + url_insertarPreguntas;
 
   	$.mobile.changePage("#eventos");  
 	$.getJSON( archivoPreguntas, {user:user,p1:p1,p2:p2,p3:p3})
@@ -208,10 +215,7 @@ $('#form-registro').submit(function() {
 	var dAreas = $("#areas").val();
 	var dPassword = $("#pass").val();
 
-
-  	//archivoRegistro = "http://www.contactu.co/app/registro.php?jsoncallback=?";
-  	archivoRegistro = "http://localhost:8888/contactu/registro.php?jsoncallback=?";
-
+  	archivoRegistro = url_base + url_registroUsuario;
 
 	$.mobile.changePage("#home");	
 	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword})
@@ -233,8 +237,7 @@ $('#form-registro').submit(function() {
 
 $('#btn-enrolarme').click(function(){
 
-//	archivoEnrolarse = "http://www.contactu.co/app/enlistarusuario.php?jsoncallback=?";
-	archivoEnrolarse = "http://localhost:8888/contactu/enlistarusuario.php?jsoncallback=?";
+	archivoEnrolarse = url_base + url_enrolarse;
 
   	alert("Este es el id que vamos a enviar: "+ id_evento);
 	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
