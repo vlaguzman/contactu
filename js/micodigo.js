@@ -1,7 +1,7 @@
 
 // #70B3A0 verde superior - #F98800 naranja
-//const url_base = "http://www.contactu.co/app/contactu/";
-const url_base = "http://localhost:8888/contactu/";
+const url_base = "http://www.contactu.co/app/";
+//const url_base = "http://localhost:8888/contactu/";
 const url_eventos = "demeeventos.php?jsoncallback=?"
 const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
 const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
