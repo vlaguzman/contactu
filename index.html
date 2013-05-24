@@ -4,8 +4,7 @@
 <meta charset="UTF-8">	
 <title>Jquery Mobile</title>
 
-<meta name="viewport" content="width=device-width,user-scalable=no"/>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
 <!--
 <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.1.css">
@@ -16,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href="css/estilos.css">
 
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-
+<script src="phonegap.js"></script>
 <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
 <!--
@@ -129,14 +128,14 @@
 	      			<span class="counter">200</span>
 	      			<textarea id="pregunta1" name="pregunta1" maxlength="200" placeholder="200 caracteres"></textarea>
 	      
-	      			<label for="pregunta2"> Intereses (etiquetas)</label>
-					<p>Ej: Cine, viajes, tecnología, videojuegos. </p>
-	      			<textarea id="pregunta2" name="pregunta2" maxlength="200"></textarea>
-	      
 	      			<label for="pregunta3"> ¿Qué le puedes aportar a otras personas?? </label>
 	      			<span class="counter">200</span>
 	      			<textarea id="pregunta3" name="pregunta3" maxlength="200" placeholder="200 caracteres"></textarea>
 	      			
+	      			<label for="pregunta2"> Intereses (etiquetas)</label>
+					<p>Ej: Cine, viajes, tecnología, videojuegos. </p>
+	      			<textarea id="pregunta2" name="pregunta2" maxlength="200"></textarea>
+
 	      			<input type="submit" value="Listo!" id="botonpreguntas"/>
 
 	    		</form>	
@@ -153,6 +152,7 @@
 			<h1>Seguna página</h1>
 		</div>
 		<div data-role="content" data-theme="a">
+
 			<ul id="lista-eventos" data-role="listview"  data-theme="a" >
 			 	
 			<!--	<li data-icon="plus">

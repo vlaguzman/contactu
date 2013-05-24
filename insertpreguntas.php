@@ -4,6 +4,7 @@ $p1 = $_GET["p1"];
 $p2 = $_GET["p2"];
 $p3 = $_GET["p3"];
 $user = $_GET["user"];
+$numero = 0;
 
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -23,13 +24,15 @@ if($resultado)
 	}
 }
 
+$query = sprintf("UPDATE usuario SET mostrarPreguntas='%s' WHERE id='%s'", 0, $id_usuario);
+$result = mysql_query($query);
 
 $id_pregunta = 1;
 $query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, respuesta) VALUES (%s,%s,'%s')", $id_usuario, $id_pregunta, $p1);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);
 
-$id_pregunta = 4;
+$id_pregunta = 2;
 $query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, respuesta) VALUES (%s,%s,'%s')", $id_usuario, $id_pregunta, $p2);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);

@@ -7,7 +7,7 @@ const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
 const url_validacionUsuario = "validacion_de_datos.php?jsoncallback=?";
 const url_insertarPreguntas = "insertpreguntas.php?jsoncallback=?"
 const url_registroUsuario = "registro.php?jsoncallback=?";
-const url_enrolarse = "registro.php?jsoncallback=?";
+const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
 
 var user;
 var id_evento = 0;
@@ -165,12 +165,14 @@ $('#formulario').submit(function() {
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	user = datosUsuario;
-		 	if(respuestaServer.primeravez == 1)
+		 	if(respuestaServer.mostrarPreguntas == 1){
 				$.mobile.changePage("#iniciar");
-			else
+			}
+			else{
 				$.mobile.changePage("#eventos");
+			}
 			document.getElementById("t-nombre").innerHTML=datosUsuario;
-			document.getElementById("evento-1").innerHTML=respuestaServer.numero;
+			//document.getElementById("evento-1").innerHTML=respuestaServer.numero;
 		  
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
@@ -195,7 +197,7 @@ $('#form-preguntas').submit(function() {
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 			$.mobile.changePage("#eventos");  
-			document.getElementById("evento-1").innerHTML=respuestaServer.numero;
+			//document.getElementById("evento-1").innerHTML=respuestaServer.numero;
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
 		}
@@ -239,7 +241,7 @@ $('#btn-enrolarme').click(function(){
 
 	archivoEnrolarse = url_base + url_enrolarse;
 
-  	alert("Este es el id que vamos a enviar: "+ id_evento);
+
 	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
 	.done(function(respuesta) {
 		alert(respuesta.mensaje + "Numero: " + respuesta.numero);
@@ -247,11 +249,13 @@ $('#btn-enrolarme').click(function(){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	id_ev = "evento-"+pos_evento;
 		 	document.getElementById(id_ev).innerHTML=respuesta.numero;
+		 	$('#subselection').data('disabled',true);
 		 	$.mobile.changePage("#eventos");
 			// document.getElementById("s1").innerHTML=count+1;
 
 		}else{
-		  /// ejecutar una conducta cuando la validacion falla
+		//	document.getElementById("#mensajes").innerHTML="Ya estas registrado en este evento";
+		  	$.mobile.changePage("#eventos");
 		}
   
 	})

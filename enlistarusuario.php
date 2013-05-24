@@ -27,17 +27,19 @@ $query = sprintf("INSERT INTO registro (id_evento, id_usuario) VALUES ('%s','%s'
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);
 
-$query = sprintf("SELECT COUNT(*) FROM registro WHERE id_evento='%s'", $id_evento);
+$query = sprintf("SELECT registros FROM evento WHERE id='%s'", $id_evento);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $contador = mysql_query($query);
 
-if($contador)
+$numero = 0;
+
+if($result && $contador)
 	{
 		if(mysql_num_rows($contador)){
 			while ($unRegistro = mysql_fetch_assoc($contador)) {
-				$numero = $unRegistro['COUNT(*)'];
+				$numero = $unRegistro['registros'];
 			}
-			$query = sprintf("UPDATE evento SET registros='%s' WHERE id='%s'", $numero, $id_evento);
+			$query = sprintf("UPDATE evento SET registros='%s' WHERE id='%s'", $numero+1, $id_evento);
 			$q_update = mysql_query($query);
 		}
 		else{
@@ -64,16 +66,16 @@ if (!$resultado) {
 }
 elseif (!$result) {
     $resultados["mensaje"] = "en INSERT INTO registro ";
-	$resultados["validacion"] = "error";
+	$resultados["validacion"] = "registrado";
 }
 elseif (!$contador) {
-    $resultados["mensaje"] = "en INSERT INTO registro (id_evento, id_usuario) ";
+    $resultados["mensaje"] = "registros FROM evento WHERE id_evento ";
 	$resultados["validacion"] = "error";
 }
 else{
 	$resultados["mensaje"] = "Validacion Correcta";
 	$resultados["validacion"] = "ok";
-	$resultados["numero"] = $numero;
+	$resultados["numero"] = $numero+1;
 
 }
 

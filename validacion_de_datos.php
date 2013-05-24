@@ -7,7 +7,7 @@ $passwordEnviado = $_GET['password'];
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
  
-$consulta = sprintf("SELECT pass FROM usuario WHERE email='%s'", $usuarioEnviado);
+$consulta = sprintf("SELECT pass, mostrarPreguntas FROM usuario WHERE email='%s'", $usuarioEnviado);
 $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
 if($resultado)
@@ -15,6 +15,8 @@ if($resultado)
 	if(mysql_num_rows($resultado)){
 		while ($unRegistro = mysql_fetch_assoc($resultado)) {
 			$passwordValido = $unRegistro['pass'];
+			$mostrarPreguntas = $unRegistro['mostrarPreguntas'];
+
 		}
 	}
 }
@@ -42,8 +44,8 @@ $usuarioValido = $usuarioEnviado;
  
 /* crea un array con datos arbitrarios que seran enviados de vuelta a la aplicacion */
 $resultados = array();
-$resultados["hora"] = date("F j, Y, g:i a"); 
-$resultados["primeravez"] = 0;
+
+$resultados["mostrarPreguntas"] = $mostrarPreguntas;
  
 /* verifica que el usuario y password concuerden correctamente */
 if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido ){
