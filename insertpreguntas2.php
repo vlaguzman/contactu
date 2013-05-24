@@ -4,7 +4,7 @@ $p1 = $_GET["p1"];
 $p2 = $_GET["p2"];
 $p3 = $_GET["p3"];
 $user = $_GET["user"];
-$numero = 0;
+$id_evento = $_GET["evento"];
 
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -24,23 +24,20 @@ if($resultado)
 	}
 }
 
-$query = sprintf("UPDATE usuario SET mostrarPreguntas='%s' WHERE id='%s'", 0, $id_usuario);
-$result = mysql_query($query);
-
-$id_pregunta = 1;
-$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, respuesta) VALUES (%s,%s,'%s')", $id_usuario, $id_pregunta, $p1);
+$id_pregunta = 4;
+$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, id_evento, respuesta) VALUES (%s,%s,%s,'%s')", $id_usuario, $id_pregunta, $id_evento, $p1);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);
 
-$id_pregunta = 2;
-$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, respuesta) VALUES (%s,%s,'%s')", $id_usuario, $id_pregunta, $p2);
+$id_pregunta = 5;
+$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, id_evento, respuesta) VALUES (%s,%s,%s,'%s')", $id_usuario, $id_pregunta, $id_evento, $p2);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
-$result = mysql_query($query);
+$result2 = mysql_query($query);
 
-$id_pregunta = 3;
-$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, respuesta) VALUES (%s,%s,'%s')", $id_usuario, $id_pregunta, $p3);
+$id_pregunta = 6;
+$query = sprintf("INSERT INTO respuesta (id_usuario, id_pregunta, id_evento, respuesta) VALUES (%s,%s,%s,'%s')", $id_usuario, $id_pregunta, $id_evento, $p3);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
-$result = mysql_query($query);
+$result3 = mysql_query($query);
 
 
 
@@ -53,11 +50,18 @@ $resultados = array();
 // Check result
 // This shows the actual query sent to MySQL, and the error. Useful for debugging.
 if (!$result) {
-    $resultados["mensaje"] = "Preguntas";
+    $resultados["mensaje"] = "en Preguntas 1";
+	$resultados["validacion"] = "error";
+}
+elseif (!$result2) {
+    $resultados["mensaje"] = "en Preguntas 2";
+	$resultados["validacion"] = "error";
+}
+elseif (!$result3) {
+    $resultados["mensaje"] = "en Preguntas 3";
 	$resultados["validacion"] = "error";
 }
 else{
-
 	$resultados["mensaje"] = "Validacion Correcta";
 	$resultados["validacion"] = "ok";
 

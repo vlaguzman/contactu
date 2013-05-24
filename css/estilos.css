@@ -14,10 +14,16 @@
 .ui-body-a,
 .ui-overlay-a {
 	color: #000;
-	background-color: #3BB5A0;
 	background-image:url(../img/bg.jpg);
+	height: 100%;
+	
 }
 
+.ui-body-a {
+
+	background-color: white;
+
+}
 .ui-body-a input,
 .ui-body-a select,
 .ui-body-a textarea{
@@ -30,3 +36,52 @@ input.ui-input-text, textarea.ui-input-text, .ui-input-search {
 input.ui-input-text { 
 	background-color: #fff !important; 
 }
+
+/* Arreglos listview eventos*/
+.links-plus{
+	background-image: url(../img/enrolarme.png);
+	width: 90px;
+}
+.ui-btn-icon-notext .ui-btn-inner {
+	height: 0;
+}
+
+/* div titulo eventos*/
+#titulo-eventos {
+	height: 42px;
+	background-color: #569987;
+}
+
+#eventos .ui-header .ui-title{
+	margin: 0;
+	margin-top: 14px;
+}
+
+/* */
+.ui-navbar li .ui-btn-icon-top .ui-btn-inner {
+	color: white;
+}
+.ui-mobile .ui-header{
+	background-image: none;
+	background-color: #70B3A0;
+}
+
+/* Cambio fondo listview participantes*/
+#lista-participantes .ui-li>.ui-btn-inner {
+	background-color: white;
+}
+
+.ui-mobile .ui-page{
+	background-color: white;
+	background-image: none;
+
+}
+
+/* Arreglos del footer*/
+.ui-footer-fixed{
+	padding: 0;
+}
+.ui-footer .ui-navbar li .ui-btn {
+	background-color: #70B3A0;
+}
+

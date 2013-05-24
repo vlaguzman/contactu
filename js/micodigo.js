@@ -1,11 +1,13 @@
 
+// #70B3A0 verde superior - #F98800 naranja
 //const url_base = "http://www.contactu.co/app/contactu/";
 const url_base = "http://localhost:8888/contactu/";
 const url_eventos = "demeeventos.php?jsoncallback=?"
 const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
 const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
 const url_validacionUsuario = "validacion_de_datos.php?jsoncallback=?";
-const url_insertarPreguntas = "insertpreguntas.php?jsoncallback=?"
+const url_insertarPreguntas = "insertpreguntas.php?jsoncallback=?";
+const url_insertarPreguntas2 = "insertpreguntas2.php?jsoncallback=?";
 const url_registroUsuario = "registro.php?jsoncallback=?";
 const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
 
@@ -15,6 +17,7 @@ var pos_evento = 0;
 var id_asistente =0;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
+
 
 	archivoEventos = url_base + url_eventos;
 
@@ -33,7 +36,7 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
-				$elmt_a2 = $('<a onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+				$elmt_a2 = $('<a class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
 				$elmt_a.append($elmt_img);
 				$elmt_a.append($elmt_h4);
 				$elmt_a.append($elmt_p);
@@ -92,8 +95,8 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 
 $( "#datos" ).on( "pageshow", function( event, ui ) {
   	archivoParticipante = url_base + url_datosParticipante;
-			
-	$.getJSON( archivoParticipante, {id_usuario: id_asistente})
+
+	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
@@ -102,32 +105,57 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				$('#datos-top img').attr("src", elemento['foto']);
 	
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-				$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-				$elmt_p2 = $('<p>'+elemento['twitter']+'</p>');
-				$elmt_p3 = $('<p>'+elemento['correo']+'</p>');
+				$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
+				$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
+				$elmt_p3 = $('<p>Correo: '+elemento['correo']+'</p>');
 
+				$('#datos-top article').empty();
 				$('#datos-top article').append($elmt_hd);
 				$('#datos-top article').append($elmt_p1);
 				$('#datos-top article').append($elmt_p2);
 				$('#datos-top article').append($elmt_p3);
 
+				elemento = respuestaServer.datos[1];
 				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
-
 				//$('#datos-q1').append($elmt_hd);
+				$('#datos-q1 p').empty();
 				$('#datos-q1').append($elmt_p1);
 
+				elemento = respuestaServer.datos[2];
 				//$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
-				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
-
+				$elmt_p1 = $('<p>'+elemento['r2']+'</p>');
 				//$('#datos-q2').append($elmt_hd);
+				$('#datos-q2 p').empty();
 				$('#datos-q2').append($elmt_p1);
 
+				elemento = respuestaServer.datos[3];
 				//$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
-				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
-
+				$elmt_p1 = $('<p>'+elemento['r3']+'</p>');
 				//$('#datos-q3').append($elmt_hd);
+				$('#datos-q3 p').empty();
 				$('#datos-q3').append($elmt_p1);
+
+				elemento = respuestaServer.datos[4];
+				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r4']+'</p>');
+				//$('#datos-q1').append($elmt_hd);
+				$('#datos-q4 p').empty();
+				$('#datos-q4').append($elmt_p1);
+
+				elemento = respuestaServer.datos[5];
+				//$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r5']+'</p>');
+				//$('#datos-q2').append($elmt_hd);
+				$('#datos-q5 p').empty();
+				$('#datos-q5').append($elmt_p1);
+
+				elemento = respuestaServer.datos[6];
+				//$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
+				$elmt_p1 = $('<p>'+elemento['r6']+'</p>');
+				//$('#datos-q3').append($elmt_hd);
+				$('#datos-q6 p').empty();
+				$('#datos-q6').append($elmt_p1);
 
 		}else{
 
@@ -161,7 +189,7 @@ $('#formulario').submit(function() {
 	
 	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
 	.done(function(respuestaServer) {
-		alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora);
+
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	user = datosUsuario;
@@ -190,10 +218,10 @@ $('#form-preguntas').submit(function() {
 
   	archivoPreguntas = url_base + url_insertarPreguntas;
 
-  	$.mobile.changePage("#eventos");  
+  //	$.mobile.changePage("#eventos");  
 	$.getJSON( archivoPreguntas, {user:user,p1:p1,p2:p2,p3:p3})
 	.done(function(respuestaServer) {
-		alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora);
+	
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 			$.mobile.changePage("#eventos");  
@@ -206,6 +234,32 @@ $('#form-preguntas').submit(function() {
 
 	return false;
 })
+
+$('#form-preguntas2').submit(function() { 
+	// recolecta los valores que inserto el usuario 	background-image:url(../img/enrolarme.png);
+	var p1 = $("#pregunta4").val();
+	var p2 = $("#pregunta5").val();
+	var p3 = $("#pregunta6").val();
+
+
+  	archivoPreguntas = url_base + url_insertarPreguntas2;
+
+	$.getJSON( archivoPreguntas, {user:user,evento:id_evento,p1:p1,p2:p2,p3:p3})
+	.done(function(respuestaServer) {
+	
+		if(respuestaServer.validacion == "ok"){
+		 	/// si la validacion es correcta, muestra la pantalla "home"
+			$.mobile.changePage("#eventos");  
+			//document.getElementById("evento-1").innerHTML=respuestaServer.numero;
+		}else{
+		  /// ejecutar una conducta cuando la validacion falla
+		}
+  
+	})
+
+	return false;
+})
+
 
 $('#form-registro').submit(function() { 
 	// recolecta los valores que inserto el usuario
@@ -222,7 +276,7 @@ $('#form-registro').submit(function() {
 	$.mobile.changePage("#home");	
 	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword})
 	.done(function(respuestaServer) {
-		alert(respuestaServer.mensaje + "\nGenerado en: " + respuestaServer.hora + "\n" +respuestaServer.generador)
+	
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 			
@@ -244,13 +298,13 @@ $('#btn-enrolarme').click(function(){
 
 	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
 	.done(function(respuesta) {
-		alert(respuesta.mensaje + "Numero: " + respuesta.numero);
+
 		if(respuesta.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	id_ev = "evento-"+pos_evento;
 		 	document.getElementById(id_ev).innerHTML=respuesta.numero;
-		 	$('#subselection').data('disabled',true);
-		 	$.mobile.changePage("#eventos");
+		 
+		 	$.mobile.changePage("#preguntas2");
 			// document.getElementById("s1").innerHTML=count+1;
 
 		}else{

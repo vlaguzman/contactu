@@ -28,7 +28,7 @@
 <body>
 	<div data-role="page" data-theme="a" id="home">
 		<div data-role="header">
-			<h1>ContactU</h1>
+			
 		</div>
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
@@ -51,7 +51,7 @@
 
 	<div data-role="page" data-theme="a" id="registro" data-add-back-btn="true">
 		<div data-role="header">
-			<h1>Formularios</h1>
+			<h1>Registro</h1>
 		</div>
 		<div data-role="content" data-theme="a">
 			<form id="form-registro">
@@ -71,7 +71,7 @@
 					<option value="Dirección/Gerencia">Dirección/Gerencia</option>
 					<option value="Deporte">Deporte</option>
 					<option value="Economía/Contabilidad/Finanzas">Economía/Contabilidad/Finanzas</option>
-					<option value="Ingeniería/Programador">Ingeniería/Programador</option>
+					<option value="Ingeniería/Técnico/Programador">Ingeniería/Técnico/Programador</option>
 					<option value="Legal">Legal</option>
 					<option value="Marketing/Ventas">Marketing/Ventas</option>
 					<option value="Medicina/Salud">Medicina/Salud</option>
@@ -149,10 +149,12 @@
 
 	<div data-role="page" data-theme="a" id="eventos" data-add-back-btn="true">
 		<div data-role="header" >
-			<h1>Seguna página</h1>
+			<h1></h1>
+		</div>
+		<div id="titulo-eventos" data-role="header" >
+			<h1>ENRÓLATE EN UN EVENTO</h1>
 		</div>
 		<div data-role="content" data-theme="a">
-
 			<ul id="lista-eventos" data-role="listview"  data-theme="a" >
 			 	
 			<!--	<li data-icon="plus">
@@ -198,28 +200,48 @@
 
 	<div data-role="page" data-theme="a" id="preguntas2" data-add-back-btn="true">
 		<div data-role="header">
-			<h1>ContactU</h1>
+			<h1></h1>
 		</div>
 		<div data-role="content">
 			
 			<div>
 				<img src="">
-				<h3>DATE A CONOCER PARA QUEDAR EN CONTACTU</h3>
+				<h3>ALGUNA INFORMACIÓN PARA POTENCIAR EL NETWORKING:</h3>
 			</div>
 				
-				<form id="form-preguntas" >
+				<form id="form-preguntas2" >
 	      
-	      			<label for="pregunta1"> ¿En qué cosas ocupas tu tiempo actualmente? </label>
+	      			<label for="pregunta4"> ¿Hay algún tema del no quisieras hablar? </label>
 	      			<span class=”counter”>200</span>
-	      			<textarea id="pregunta1" name="pregunta1" maxlength="200" placeholder="200 caracteres"></textarea>
+	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
 	      
-	      			<label for="pregunta2"> Intereses (etiquetas)</label>
-					<p>Ej: Cine, viajes, tecnología, videojuegos. </p>
-	      			<textarea id="pregunta2" name="pregunta2" maxlength="200"></textarea>
-	      
-	      			<label for="pregunta3"> ¿Qué le puedes aportar a otras personas?? </label>
-	      			<span class=”counter”>200</span>
-	      			<textarea id="pregunta3" name="pregunta3" maxlength="200" placeholder="200 caracteres"></textarea>
+	      			<select id="pregunta5" name="pregunta5" data-native-menu="false">
+						<option placeholder="true">¿Qué perfil específico estás buscando?</option>
+						<option value="Administración/Negocios">Administración/Negocios</option>
+						<option value="Arte">Arte</option>
+						<option value="Dirección/Gerencia">Dirección/Gerencia</option>
+						<option value="Deporte">Deporte</option>
+						<option value="Economía/Contabilidad/Finanzas">Economía/Contabilidad/Finanzas</option>
+						<option value="Ingeniería/Técnico/Programador">Ingeniería/Técnico/Programador</option>
+						<option value="Legal">Legal</option>
+						<option value="Marketing/Ventas">Marketing/Ventas</option>
+						<option value="Medicina/Salud">Medicina/Salud</option>
+						<option value="Música">Música</option>
+						<option value="Recursos Humanos">Recursos Humanos</option>
+						<option value="Literatura Redacción">Literatura Redacción</option>
+						<option value="Ninguno en particular">Ninguno en particular</option>
+					</select>
+
+
+	      			 <select id="pregunta6" name="pregunta6" data-native-menu="false">
+						<option placeholder="true">¿Esperas encontrar algo en particular?</option>
+						<option value="Nuevas oportunidades de trabajo">Nuevas oportunidades de trabajo</option>
+						<option value="Contacto de potenciales socios">Contacto de potenciales socios</option>
+						<option value="Contacto de potenciales clientes">Contacto de potenciales clientes</option>
+						<option value="Buscar gente para mi empresa">Buscar gente para mi empresa</option>
+						<option value="Nada en particular">Nada en particular</option>
+		
+					</select>
 	      			
 	      			<input type="submit" value="Listo!" id="botonpreguntas"/>
 
@@ -234,7 +256,7 @@
 
 	<div data-role="page" data-theme="a" id="participantes" data-add-back-btn="true">
 		<div data-role="header" >
-			<h1>Participantes</h1>
+			<h1></h1>
 		</div>
 		<div data-role="content">
 			<ul id="lista-participantes" data-role="listview" data-theme="a" >
@@ -264,7 +286,7 @@
 
 	<div data-role="page" data-theme="a" id="datos" data-add-back-btn="true">
 		<div data-role="header">
-			<h1>ContactU</h1>
+			<h1></h1>
 		</div>
 		<div data-role="content" data-theme="a">
 			<article id="datos-top">
@@ -279,177 +301,41 @@
 		
 			<section>
 				<article id="datos-q1">
-					
-					<h4>¿En qué cosas ocupas tu tiempo actualmente? </h4>
+					<h4>En qué cosas ocupas mi tiempo actualmente:</h4>
 					<!--
 					<p>Hacer mermeladas, estar en un emprendimiento digital.</p>
 					-->
 				</article>
 				<article id="datos-q2">
-				
-					<h4>Intereses</h4>
+					<h4>Intereses:</h4>
 					<!--
 					<p>Música, gastronomía, emprendimiento, mermeladas, diseño, publicidad, comunidades.</p>
 					-->
 				</article>
 				<article id="datos-q3">
-					
-					<h4>¿Qué le puedes aportar a otras personas?</h4>
+					<h4>¿Qué le puedo aportar a otras personas?</h4>
 					<!--
 					<p>Experiencia en diseño, publicidad, gastronomía y orientación al logro.</p>
 					-->
 				</article>
-			</section>
-				
-		</div>	
-		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
-			
-		</div>
-	</div>
-
-	<div data-role="page" data-theme="a" id="datos-o" data-add-back-btn="true">
-		<div data-role="header">
-			<h1>ContactU</h1>
-		</div>
-		<div data-role="content" data-theme="a">
-			<article>
-				<img src="img/foto_oscar144.png">
-				<article>
-					<div>
-						<h3>Oscar Sierra</h3>
-						<p>Diseño gráfico</p>
-						<p>@oscaramuza</p>
-						<p>osierra43@gmail.com</p>
-					</div>
+				<article id="datos-q4">
+					<h4>Temas de los que prefiero no hablar en el evento:</h4>
+					<!--
+					<p>Hacer mermeladas, estar en un emprendimiento digital.</p>
+					-->
 				</article>
-			</article>
-		
-			<section>
-				<article>
-					<h4>¿En qué cosas ocupas tu tiempo actualmente? </h4>
-					<p>Diseño, hacer crecer mi propia empresa, emprendimientos digitales y asesorar a la parte visual a otra empresa.</p>
+				<article id="datos-q5">
+					<h4>Perfil de persona que estoy buscando:</h4>
+					<!--
+					<p>Música, gastronomía, emprendimiento, mermeladas, diseño, publicidad, comunidades.</p>
+					-->
 				</article>
-				<article>
-					<h4>Intereses</h4>
-					<p>Futbol, creatividad, estrategia, diseño, emprendimiento, vermeladas, publicidad.</p>
+				<article id="datos-q6">
+					<h4>Lo que espero del networking:</h4>
+					<!--
+					<p>Experiencia en diseño, publicidad, gastronomía y orientación al logro.</p>
+					-->
 				</article>
-				<article>
-					<h4>¿Qué le puedes aportar a otras personas?</h4>
-					<p>Conocimiento en procesos de estrategía y creativos, vivir bien y comer sano.</p>
-				</article>
-
-			</section>
-				
-		</div>	
-		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
-			
-		</div>
-	</div>
-
-	<div data-role="page" data-theme="a" id="datos-v" data-add-back-btn="true">
-		<div data-role="header">
-			<h1>ContactU</h1>
-		</div>
-		<div data-role="content" data-theme="a">
-			<article>
-				<img src="img/foto_vlado144.png">
-				<article>
-					<div>
-						<h3>Vladimir Guzmán</h3>
-						<p>Ingeniería/Programación</p>
-						<p>@vlaguzman</p>
-						<p>guzman.vla@gmail.com</p>
-					</div>
-				</article>
-			</article>
-		
-			<section>
-				<article>
-					<h4>¿En qué cosas ocupas tu tiempo actualmente? </h4>
-					<p>Fortalezco conocimietos en desarrollo web y móvil, desarrollo de actividades de emprendimiento, desarrollo de emprendimientos propios incluida una startup.</p>
-				</article>
-				<article>
-					<h4>Intereses</h4>
-					<p>Cine, emprendimiento, ideas, startups, código, tecnología, comunidades.</p>
-				</article>
-				<article>
-					<h4>¿Qué le puedes aportar a otras personas?</h4>
-					<p>Ideas para sus emprendimientos, apoyo en desarrollo, actividades para contactar personas, buena vibra.</p>
-				</article>
-
-			</section>
-				
-		</div>	
-		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
-			
-		</div>
-	</div>
-
-		<div data-role="page" data-theme="a" id="datos-d" data-add-back-btn="true">
-		<div data-role="header">
-			<h1>ContactU</h1>
-		</div>
-		<div data-role="content" data-theme="a">
-			<article>
-				<img src="img/avatar_mario144.jpg">
-				<article>
-					<div>
-						<h3>Diseño gráfico</h3>
-					</div>
-				</article>
-			</article>
-		
-			<section>
-				<article>
-					<h4>¿En qué cosas ocupas tu tiempo actualmente? </h4>
-					<p>Diseño gráfico, estoy trabajando sobre una idea propia, trabajo como maquetador en una empresa, como hobbie son los carros.</p>
-				</article>
-				<article>
-					<h4>Intereses</h4>
-					<p>Autos, cine, startups, cerveza.</p>
-				</article>
-				<article>
-					<h4>¿Qué le puedes aportar a otras personas?</h4>
-					<p>Diseño gráfico y maquetación. E ideas para publicidad.</p>
-				</article>
-
-			</section>
-				
-		</div>	
-		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
-			
-		</div>
-	</div>
-
-	<div data-role="page" data-theme="a" id="datos-p" data-add-back-btn="true">
-		<div data-role="header">
-			<h1>ContactU</h1>
-		</div>
-		<div data-role="content" data-theme="a">
-			<article>
-				<img src="img/avatar_negrita144.png">
-				<article>
-					<div>
-						<h3>Ingeniería/Programación</h3>
-						
-					</div>
-				</article>
-			</article>
-		
-			<section>
-				<article>
-					<h4>¿En qué cosas ocupas tu tiempo actualmente? </h4>
-					<p>Trabajo como desarrolladora web para una empresa, doy clases de baile los fines de semana y voy a cine cade vez que puedo.</p>
-				</article>
-				<article>
-					<h4>Intereses</h4>
-					<p>Baile, código, cine.</p>
-				</article>
-				<article>
-					<h4>¿Qué le puedes aportar a otras personas?</h4>
-					<p>Les puedo enseñar a bailar =), con desarrollo web y dando sugerencis de buenas pelis.</p>
-				</article>
-
 			</section>
 				
 		</div>	

@@ -1,6 +1,7 @@
 <?php 
 
 $id_usuario = $_GET['id_usuario'];
+$id_evento = $_GET['evento'];
 
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -14,12 +15,33 @@ mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base d
 
 
 $consulta = sprintf("SELECT id, nombre, img, avatar, areas, twitter, email from usuario WHERE id='%s' ", $id_usuario);
-
-
 $query_datosusuario = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
-mysql_close($conexion);
+$id_pregunta = 1;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s'", $id_usuario, $id_pregunta);
+$query_r1 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
+$id_pregunta = 2;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s'", $id_usuario, $id_pregunta);
+$query_r2 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
+
+$id_pregunta = 3;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s'", $id_usuario, $id_pregunta);
+$query_r3 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
+
+$id_pregunta = 4;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s' AND id_evento='%s'", $id_usuario, $id_pregunta, $id_evento);
+$query_r4 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
+
+$id_pregunta = 5;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s' AND id_evento='%s'", $id_usuario, $id_pregunta, $id_evento);
+$query_r5 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
+
+$id_pregunta = 6;
+$consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s' AND id_evento='%s'", $id_usuario, $id_pregunta, $id_evento);
+$query_r6 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
+
+mysql_close($conexion);
 
 if($query_datosusuario)
 {
@@ -35,25 +57,113 @@ if($query_datosusuario)
 				'area' => $unRegistro['areas'],
 				'twitter' => $unRegistro['twitter'],
 				'correo' => $unRegistro['email'],
-				//'q1' => $unRegistro['nombre'],
-				'r1'=> $unRegistro['nombre'],
-				//'q2' => $unRegistro['nombre'],
-				//'r2'=> $unRegistro['nombre'],
-				//'q3' => $unRegistro['nombre'],
-				//'r3'=> $unRegistro['nombre'],
-
 				);
 		}
 	}
 }
 
+if($query_r1)
+{
+	if(mysql_num_rows($query_r1)){
+		while ($unRegistro = mysql_fetch_assoc($query_r1)) {
+			//$r1 = $unRegistro['id'];
+				$registros[1] = array(
+				'r1'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
+
+if($query_r2)
+{
+	if(mysql_num_rows($query_r2)){
+		while ($unRegistro = mysql_fetch_assoc($query_r2)) {
+			//$r2 = $unRegistro['id'];
+				$registros[2] = array(
+				'r2'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
+
+if($query_r3)
+{
+	if(mysql_num_rows($query_r3)){
+		while ($unRegistro = mysql_fetch_assoc($query_r3)) {
+			//$r3 = $unRegistro['id'];
+				$registros[3] = array(
+				'r3'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
+
+if($query_r4)
+{
+	if(mysql_num_rows($query_r4)){
+		while ($unRegistro = mysql_fetch_assoc($query_r4)) {
+			//$r1 = $unRegistro['id'];
+				$registros[4] = array(
+				'r4'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
+
+if($query_r5)
+{
+	if(mysql_num_rows($query_r5)){
+		while ($unRegistro = mysql_fetch_assoc($query_r5)) {
+			//$r2 = $unRegistro['id'];
+				$registros[5] = array(
+				'r5'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
+
+if($query_r6)
+{
+	if(mysql_num_rows($query_r6)){
+		while ($unRegistro = mysql_fetch_assoc($query_r6)) {
+			//$r3 = $unRegistro['id'];
+				$registros[6] = array(
+				'r6'=> $unRegistro['respuesta'],
+				);
+		}
+	}
+}
 
 /* crea un array con datos arbitrarios que seran enviados de vuelta a la aplicacion */
 $resultados = array();
 // Check result
 // This shows the actual query sent to MySQL, and the error. Useful for debugging.
 if (!$query_datosusuario) {
-    $resultados["mensaje"] = "Error";
+    $resultados["mensaje"] = "Error consultando usuario";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r1) {
+    $resultados["mensaje"] = "Error consultando r1";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r2) {
+	$resultados["mensaje"] = "Error consultando r2";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r3) {
+	$resultados["mensaje"] = "Error  consultando r3";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r4) {
+    $resultados["mensaje"] = "Error consultando r4";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r5) {
+	$resultados["mensaje"] = "Error consultando r5";
+	$resultados["validacion"] = "error";
+}
+elseif (!$query_r6) {
+	$resultados["mensaje"] = "Error  consultando r6";
 	$resultados["validacion"] = "error";
 }
 else{
@@ -61,6 +171,9 @@ else{
 	$resultados["mensaje"] = "Consulta exitosa";
 	$resultados["validacion"] = "ok";
 	$resultados["datos"] = $registros;
+	//$resultados["r1"] = $r1;
+	//$resultados["r2"] = $r2;
+	//$resultados["r3"] = $r3;	
 
 }
 
