@@ -96,6 +96,13 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 $( "#datos" ).on( "pageshow", function( event, ui ) {
   	archivoParticipante = url_base + url_datosParticipante;
 
+  	$('#datos-top article').empty();
+  	$('#datos-q1 p').empty();
+  	$('#datos-q2 p').empty();
+	$('#datos-q3 p').empty();
+	$('#datos-q4 p').empty();
+	$('#datos-q5 p').empty();
+	$('#datos-q6 p').empty();
 	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
@@ -109,7 +116,7 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
 				$elmt_p3 = $('<p>Correo: '+elemento['correo']+'</p>');
 
-				$('#datos-top article').empty();
+
 				$('#datos-top article').append($elmt_hd);
 				$('#datos-top article').append($elmt_p1);
 				$('#datos-top article').append($elmt_p2);
@@ -119,42 +126,38 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r1']+'</p>');
 				//$('#datos-q1').append($elmt_hd);
-				$('#datos-q1 p').empty();
+				
 				$('#datos-q1').append($elmt_p1);
 
 				elemento = respuestaServer.datos[2];
 				//$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r2']+'</p>');
 				//$('#datos-q2').append($elmt_hd);
-				$('#datos-q2 p').empty();
 				$('#datos-q2').append($elmt_p1);
 
 				elemento = respuestaServer.datos[3];
 				//$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r3']+'</p>');
 				//$('#datos-q3').append($elmt_hd);
-				$('#datos-q3 p').empty();
+
 				$('#datos-q3').append($elmt_p1);
 
 				elemento = respuestaServer.datos[4];
 				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r4']+'</p>');
 				//$('#datos-q1').append($elmt_hd);
-				$('#datos-q4 p').empty();
 				$('#datos-q4').append($elmt_p1);
 
 				elemento = respuestaServer.datos[5];
 				//$elmt_hd = $('<h4>'+elemento['q2']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r5']+'</p>');
 				//$('#datos-q2').append($elmt_hd);
-				$('#datos-q5 p').empty();
 				$('#datos-q5').append($elmt_p1);
 
 				elemento = respuestaServer.datos[6];
 				//$elmt_hd = $('<h4>'+elemento['q3']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['r6']+'</p>');
 				//$('#datos-q3').append($elmt_hd);
-				$('#datos-q6 p').empty();
 				$('#datos-q6').append($elmt_p1);
 
 		}else{
