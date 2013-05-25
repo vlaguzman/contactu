@@ -1,23 +1,25 @@
 #home img{
 	margin: 10% 0% 10% 25%;
 }
-
 /* div titulo eventos*/
 #titulo-eventos {
 	height: 42px;
 	background-color: #569987;
 }
-
 #eventos .ui-header .ui-title{
 	margin: 0;
 	margin-top: 14px;
 }
-
-
-
 /* Arreglos del footer*/
 .ui-footer-fixed{
 	padding: 0;
 }
-
+/* Arreglos listview eventos*/
+.links-plus{
+	background-image: url(../img/enrolarme.png);
+	width: 90px;
+}
+.ui-btn-icon-notext .ui-btn-inner {
+	height: 0;
+}
 

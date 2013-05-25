@@ -193,6 +193,7 @@ $('#formulario').submit(function() {
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	user = datosUsuario;
+		 	pass = datosPassword;
 		 	if(respuestaServer.mostrarPreguntas == 1){
 				$.mobile.changePage("#iniciar");
 			}
