@@ -13,13 +13,41 @@
 -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
 <link rel="stylesheet" type="text/css" href="css/estilos_basicos.css">
+<script src="http://platform.linkedin.com/in.js" type="text/javascript">
+        api_key: nyvx5ricm4ew
+        onLoad: onLinkedInLoad
+        authorize: true
+        lang:  es_ES
+</script>
+
+<script type="text/javascript">
+	
+function onLinkedInLoad() {
+     IN.Event.on(IN, "auth", onLinkedInAuth);
+}
+
+function onLinkedInAuth() {
+     IN.API.Profile("me")
+     .fields("firstName", "lastName", "industry")
+     .result(displayProfiles);
+}
+
+function displayProfiles(profiles) {
+     member = profiles.values[0];
+     document.getElementById("profiles").innerHTML = 
+          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.industry + "</p>";
+}
+
+</script>
+
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-<script src="phonegap.js"></script>
+
 <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
 <!--
 <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.3.1.css">
 <script type="text/javascript" src="js/jquery.js"></script>
+<script src="phonegap.js"></script>
 <script type="text/javascript" src="js/jquery.mobile-1.3.1.js"></script>
 -->
 </head>
@@ -31,6 +59,11 @@
 		</div>
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
+
+			<script type="IN/Login"></script>
+			
+			<div id="profiles">
+			</div>
 			<form id="formulario" >
       
       			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email">
