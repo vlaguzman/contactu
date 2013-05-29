@@ -14,7 +14,8 @@ const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
 var user;
 var id_evento = 0;
 var pos_evento = 0;
-var id_asistente =0;
+var id_asistente = 0;
+var pos_lista = 0;
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
@@ -69,19 +70,27 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 			
 			$('#lista-participantes li').remove();
 			for (var i = 0; i < respuestaServer.usuarios.length; i++) {
-				
 				var elemento = respuestaServer.usuarios[i];
-
 				$elmt_lip = $('<li></li>');
-				$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+')" href="#datos">');
-				$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
-				$elmt_h4p = $('<h4>'+elemento['nombre']+'</h4>');
-				$elmt_pp = $('<p>'+elemento['area']+'</p>');
+				if (i<3) {
+					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
+					$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
+					$elmt_h4p = $('<h4>'+elemento['nombre']+'</h4>');
+					$elmt_pp = $('<p>'+elemento['area']+'</p>');
+
+				}else{
+					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
+					$elmt_imgp = $('<img src="'+elemento['avatar']+'">');
+					$elmt_h4p = $('<h4>'+elemento['area']+'</h4>');
+					$elmt_pp = $('<p>'+elemento['intereses']+'</p>');
+				};
+
 				$elmt_ap.append($elmt_imgp);
 				$elmt_ap.append($elmt_h4p);
 				$elmt_ap.append($elmt_pp);
 				$elmt_lip.append($elmt_ap);
 				$('#lista-participantes').append($elmt_lip);
+
 			};
 
 		}else{
@@ -109,18 +118,22 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 			
 				var elemento = respuestaServer.datos[0];
 								
-				$('#datos-top img').attr("src", elemento['foto']);
-	
-				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-				$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
-				$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
-				$elmt_p3 = $('<p>Correo: '+elemento['correo']+'</p>');
+				if (pos_lista<3) {
+					$('#datos-top img').attr("src", elemento['foto']);
+					$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
+					$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
+					$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
+					$elmt_p3 = $('<p>Correo: '+elemento['correo']+'</p>');
 
-
-				$('#datos-top article').append($elmt_hd);
-				$('#datos-top article').append($elmt_p1);
-				$('#datos-top article').append($elmt_p2);
-				$('#datos-top article').append($elmt_p3);
+					$('#datos-top article').append($elmt_hd);
+					$('#datos-top article').append($elmt_p1);
+					$('#datos-top article').append($elmt_p2);
+					$('#datos-top article').append($elmt_p3);
+				}else{
+					$('#datos-top img').attr("src", elemento['avatar']);	
+					$elmt_hd = $('<h4>'+elemento['area']+'</h4>');
+					$('#datos-top article').append($elmt_hd);
+				};
 
 				elemento = respuestaServer.datos[1];
 				//$elmt_hd = $('<h4>'+elemento['q1']+'</h4>');
@@ -179,8 +192,9 @@ function almaceneIdEvento(ev_id){
 	id_evento = ev_id;
 }
 
-function almaceneIdParticipante(id_prt){
+function almaceneIdParticipante(id_prt, pos){
 	id_asistente = id_prt;
+	pos_lista = pos;
 }
 
 $('#formulario').submit(function() { 

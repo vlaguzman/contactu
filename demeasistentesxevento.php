@@ -5,9 +5,9 @@ $id_evento = $_GET["idevento"];
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
 
-
-$consulta = sprintf("SELECT t1.id_usuario, t2.nombre, t2.email, t2.areas, t2.img FROM registro AS t1, usuario AS t2
-	WHERE t1.id_usuario = t2.id AND t1.id_evento=%s", $id_evento);
+$id_pregunta = 2;
+$consulta = sprintf("SELECT t1.id_usuario, t2.nombre, t2.email, t2.areas, t2.img, t2.avatar, t3.respuesta FROM registro AS t1, usuario AS t2, respuesta AS t3
+	WHERE t1.id_usuario = t2.id AND t3.id_usuario = t2.id AND t1.id_evento=%s AND t3.id_pregunta=%s", $id_evento, $id_pregunta);
 $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
 //$resultado = mysql_num_rows($resultado)
@@ -24,6 +24,8 @@ $registros = array();
 				'email' => $unRegistro['email'],
 				'twitter' => $unRegistro['twitter'],
 				'area' => $unRegistro['areas'],
+				'avatar' => $unRegistro['avatar'],
+				'intereses' => $unRegistro['respuesta'],
 			);
 		}
 	}

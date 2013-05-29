@@ -20,25 +20,6 @@
         lang:  es_ES
 </script>
 
-<script type="text/javascript">
-	
-function onLinkedInLoad() {
-     IN.Event.on(IN, "auth", onLinkedInAuth);
-}
-
-function onLinkedInAuth() {
-     IN.API.Profile("me")
-     .fields("firstName", "lastName", "industry")
-     .result(displayProfiles);
-}
-
-function displayProfiles(profiles) {
-     member = profiles.values[0];
-     document.getElementById("profiles").innerHTML = 
-          "<p id=\"" + member.id + "\">Hello " +  member.firstName + " " + member.industry + "</p>";
-}
-
-</script>
 
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
 
@@ -60,10 +41,7 @@ function displayProfiles(profiles) {
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
 
-			<script type="IN/Login"></script>
 			
-			<div id="profiles">
-			</div>
 			<form id="formulario" >
       
       			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email">
@@ -74,6 +52,7 @@ function displayProfiles(profiles) {
     		</form>	
 	
 	 		<a href="#registro" data-role="button" data-theme="a"> Registrarse </a>
+	 		<a href="auth.php" data-role="button" data-theme="a" rel="external"> LinkedIn </a>
 		</div>	
 
 		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
@@ -320,7 +299,7 @@ function displayProfiles(profiles) {
 		<div data-role="header">
 			<h1></h1>
 		</div>
-		<div data-role="content" data-theme="a">
+		<div data-role="content" data-theme="c">
 			<article id="datos-top">
 				<img>
 				<article>
