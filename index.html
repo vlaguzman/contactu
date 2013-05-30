@@ -13,10 +13,11 @@
 -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
 <link rel="stylesheet" type="text/css" href="css/estilos_basicos.css">
+
 <script src="http://platform.linkedin.com/in.js" type="text/javascript">
         api_key: nyvx5ricm4ew
         onLoad: onLinkedInLoad
-       // authorize: true
+        authorize: false
         lang:  es_ES
 </script>
 
@@ -41,7 +42,10 @@
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
 
-			
+			<script type="IN/Login"></script>
+			<div id="prueba">
+				
+			</div>
 			<form id="formulario" >
       
       			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email">
@@ -52,7 +56,8 @@
     		</form>	
 	
 	 		<a href="#registro" data-role="button" data-theme="a"> Registrarse </a>
-	 		<a href="auth.php" data-role="button" data-theme="a" rel="external"> LinkedIn </a>
+
+	 		
 		</div>	
 
 		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
@@ -115,17 +120,14 @@
 			<h1>ContactU</h1>
 		</div>
 		<div data-role="content" data-theme="a">
-			<article>
-				<img src="img/avatar_goku.jpeg">
+			
+			<article id="i-datos-top">
+				<img>
 				<article>
-					<div>
-						<img src="">
-						<h3 id="t-nombre"></h3>
-						<img src="">
-					</div>
-					<div>
-						<p id="t-areas"></p>
-					</div>
+					<!-- <h3>Yurany López</h3>
+					<p>Marketing y ventas</p>
+					<p>@yuraloco</p>
+					<p>yuraloco@gmail.com</p> -->
 				</article>
 			</article>
 			<div>

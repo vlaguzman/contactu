@@ -7,15 +7,24 @@ $passwordEnviado = $_GET['password'];
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
  
-$consulta = sprintf("SELECT pass, mostrarPreguntas FROM usuario WHERE email='%s'", $usuarioEnviado);
+$consulta = sprintf("SELECT pass, mostrarPreguntas, nombre, img, email, twitter, areas FROM usuario WHERE email='%s'", $usuarioEnviado);
 $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
 if($resultado)
 {
+	$registros = array();
 	if(mysql_num_rows($resultado)){
 		while ($unRegistro = mysql_fetch_assoc($resultado)) {
 			$passwordValido = $unRegistro['pass'];
-			$mostrarPreguntas = $unRegistro['mostrarPreguntas'];
+			$registros[] = array(
+				'mostrarPreguntas' => $unRegistro['mostrarPreguntas'],
+				'nombre' => $unRegistro['nombre'],
+				'imagen' => $unRegistro['img'],
+				'email' => $unRegistro['email'],
+				'twitter' => $unRegistro['twitter'],
+				'area' => $unRegistro['areas'],
+			);
+	
 
 		}
 	}
@@ -45,7 +54,6 @@ $usuarioValido = $usuarioEnviado;
 /* crea un array con datos arbitrarios que seran enviados de vuelta a la aplicacion */
 $resultados = array();
 
-$resultados["mostrarPreguntas"] = $mostrarPreguntas;
  
 /* verifica que el usuario y password concuerden correctamente */
 if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido ){
@@ -53,6 +61,7 @@ if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido )
 	$resultados["mensaje"] = "Validacion Correcta";
 	$resultados["validacion"] = "ok";
 	$resultados["numero"] = $numero;
+	$resultados["usuario"] = $registros;
  
 }else{
 	/*esta informacion se envia si la validacion falla */
