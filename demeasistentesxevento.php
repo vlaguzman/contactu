@@ -1,7 +1,8 @@
 <?php
 
 $id_evento = $_GET["idevento"];
- 
+$email = $_GET["email"];
+
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
 
@@ -12,11 +13,33 @@ $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consult
 
 //$resultado = mysql_num_rows($resultado)
 
+$consulta2 = sprintf("SELECT t2.id_user2 FROM usuario AS t1, desbloqueo AS t2 WHERE t1.id = t2.id_user AND t1.email='%s'", $email);
+$desbloqueados = mysql_query($consulta2, $conexion) or die ('Error en SQL: '.$consulta2);
+
+
+
 if($resultado)
 {
 $registros = array();
 	if(mysql_num_rows($resultado)){
 		while ($unRegistro = mysql_fetch_assoc($resultado)) {
+			$desbloqueado = 0;
+			$temp = mysql_query($consulta2, $conexion) or die ('Error en SQL: '.$consulta2);
+			if($temp)
+				{
+					if(mysql_num_rows($temp)){
+						
+						while ($otroRegistro = mysql_fetch_assoc($temp)) {
+							
+							if ($otroRegistro['id_user2']==$unRegistro['id_usuario']) {
+							 	$desbloqueado = 1;
+							 } 
+								
+						}
+					}
+							
+				}
+
 			$registros[] = array(
 				'id_usuario' => $unRegistro['id_usuario'],
 				'nombre' => $unRegistro['nombre'],
@@ -26,6 +49,7 @@ $registros = array();
 				'area' => $unRegistro['areas'],
 				'avatar' => $unRegistro['avatar'],
 				'intereses' => $unRegistro['respuesta'],
+				'desbloqueado' => $desbloqueado,
 			);
 		}
 	}

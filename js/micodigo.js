@@ -64,7 +64,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 
   	archivoParticipantes = url_base + url_asistentes;
 	
-	$.getJSON( archivoParticipantes, {idevento: id_evento})
+	$.getJSON( archivoParticipantes, {idevento: id_evento, email: user})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
@@ -72,7 +72,9 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 			for (var i = 0; i < respuestaServer.usuarios.length; i++) {
 				var elemento = respuestaServer.usuarios[i];
 				$elmt_lip = $('<li></li>');
-				if (i<3) {
+			
+				if ((i<3)||(elemento['desbloqueado']==1)) {
+					
 					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
 					$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
 					$elmt_h4p = $('<h4>'+elemento['nombre']+'</h4>');
@@ -132,7 +134,12 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				}else{
 					$('#datos-top img').attr("src", elemento['avatar']);	
 					$elmt_hd = $('<h4>'+elemento['area']+'</h4>');
+					$elmt_btn = $('<a href="#des-contactu" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-theme="a">Desbloquear ContactU</a>');
+
 					$('#datos-top article').append($elmt_hd);
+					$('#datos-top article').append($elmt_btn);
+					$('#datos-top article').trigger('create');
+
 				};
 
 				elemento = respuestaServer.datos[1];
