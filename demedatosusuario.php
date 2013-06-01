@@ -2,6 +2,7 @@
 
 $id_usuario = $_GET['id_usuario'];
 $id_evento = $_GET['evento'];
+$email = $_GET["email"];
 
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -41,7 +42,9 @@ $id_pregunta = 6;
 $consulta = sprintf("SELECT respuesta from respuesta WHERE id_usuario='%s' AND id_pregunta='%s' AND id_evento='%s'", $id_usuario, $id_pregunta, $id_evento);
 $query_r6 = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 
-mysql_close($conexion);
+$consulta2 = sprintf("SELECT t2.id_user2 FROM usuario AS t1, desbloqueo AS t2 WHERE t1.id = t2.id_user AND t1.email='%s'", $email);
+$desbloqueados = mysql_query($consulta2, $conexion) or die ('Error en SQL: '.$consulta2);
+
 
 if($query_datosusuario)
 {
@@ -49,6 +52,25 @@ if($query_datosusuario)
 	$registros = array();
 	if(mysql_num_rows($query_datosusuario)){
 		while ($unRegistro = mysql_fetch_assoc($query_datosusuario)) {
+			
+			$desbloqueado = 0;
+			$temp = mysql_query($consulta2, $conexion) or die ('Error en SQL: '.$consulta2);
+			if($temp)
+				{
+					$desbloqueado = 8;
+					if(mysql_num_rows($temp)){
+						$desbloqueado = 9;
+						while ($otroRegistro = mysql_fetch_assoc($temp)) {
+							$desbloqueado = 11;
+							if ($otroRegistro['id_user2']==$unRegistro['id']) {
+							 	$desbloqueado = 1;
+							 } 
+
+								
+						}
+					}
+							
+				}
 			$registros[] = array(
 				'id' => $unRegistro['id'],
 				'nombre' => $unRegistro['nombre'],
@@ -57,6 +79,7 @@ if($query_datosusuario)
 				'area' => $unRegistro['areas'],
 				'twitter' => $unRegistro['twitter'],
 				'correo' => $unRegistro['email'],
+				'desbloqueado' => $desbloqueado,
 				);
 		}
 	}
@@ -134,6 +157,8 @@ if($query_r6)
 	}
 }
 
+mysql_close($conexion);
+
 /* crea un array con datos arbitrarios que seran enviados de vuelta a la aplicacion */
 $resultados = array();
 // Check result
@@ -164,6 +189,10 @@ elseif (!$query_r5) {
 }
 elseif (!$query_r6) {
 	$resultados["mensaje"] = "Error  consultando r6";
+	$resultados["validacion"] = "error";
+}
+elseif (!$desbloqueados) {
+	$resultados["mensaje"] = "Error desbloqueados";
 	$resultados["validacion"] = "error";
 }
 else{

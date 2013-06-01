@@ -34,6 +34,7 @@ $registros = array();
 							if ($otroRegistro['id_user2']==$unRegistro['id_usuario']) {
 							 	$desbloqueado = 1;
 							 } 
+
 								
 						}
 					}

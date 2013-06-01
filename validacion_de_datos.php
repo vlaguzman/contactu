@@ -3,6 +3,8 @@
 /* Extrae los valores enviados desde la aplicacion movil */
 $usuarioEnviado = $_GET['usuario'];
 $passwordEnviado = $_GET['password'];
+
+$passwordEnviado = crypt($passwordEnviado);
  
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -24,8 +26,6 @@ if($resultado)
 				'twitter' => $unRegistro['twitter'],
 				'area' => $unRegistro['areas'],
 			);
-	
-
 		}
 	}
 }

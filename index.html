@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">	
-<title>Jquery Mobile</title>
+<title>ContactU</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
 
@@ -14,6 +14,10 @@
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
 <link rel="stylesheet" type="text/css" href="css/estilos_basicos.css">
 
+<!-- SHA3 -->
+<script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+
+<!-- Login LinkedIn -->
 <script src="http://platform.linkedin.com/in.js" type="text/javascript">
         api_key: nyvx5ricm4ew
         onLoad: onLinkedInLoad
@@ -21,9 +25,11 @@
         lang:  es_ES
 </script>
 
+<!-- Twitter compartir frases -->
+
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-
 <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
 <!--
@@ -41,15 +47,16 @@
 		</div>
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
+			<img src="img/copy.png">
 
-			<script type="IN/Login"></script>
-			<div id="prueba">
-				
+			
+			<div id="login">
+				<script type="IN/Login"></script>
 			</div>
 			<form id="formulario" >
       
-      			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email">
-     			<input type="password" id="clave" name="clave" placeholder="Contraseña">
+      			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email" required>
+     			<input type="password" id="clave" name="clave" placeholder="Contraseña" >
  
       			<input type="submit" value="Iniciar Sesión" id="botonLogin">
       
@@ -71,16 +78,18 @@
 		</div>
 		<div data-role="content" data-theme="a">
 			<form id="form-registro">
+				
 				<label for="nombre">Nombre</label>
-				<input type="text" id="nombre" name="nombre">
+				<input type="text" id="nombre" name="nombre" required>
 				
 				<label for="email">Email</label>
-				<input type="email" id="email" name="email">
-
-				<label for="pass">Contraseña</label>
-				<input input type="password" id="pass" name="pass">
-
-				<select id="areas" name="areas" data-native-menu="false">
+				<input type="email" id="email" name="email" required>
+				
+				
+                <label for="password">Password</label><input type='password' id='p1' required><br /><br />
+                <label for="password">Confirm Password</label><input type='password' onfocus="validatePass(document.getElementById('p1'), this);" oninput="validatePass(document.getElementById('p1'), this);" required>
+            	
+				<select id="areas" name="areas" data-native-menu="false" required>
 					<option placeholder="true">Con qué perfil te identificas más:</option>
 					<option value="Administración/Negocios">Administración/Negocios</option>
 					<option value="Arte">Arte</option>
@@ -119,7 +128,7 @@
 		<div data-role="header">
 			<h1>ContactU</h1>
 		</div>
-		<div data-role="content" data-theme="a">
+		<div data-role="content" data-theme="b">
 			
 			<article id="i-datos-top">
 				<img>
@@ -135,14 +144,14 @@
 				<h3>DATE A CONOCER PARA QUEDAR EN CONTACTU</h3>
 			</div>
 				
-				<form id="form-preguntas" data-theme="a">
+				<form id="form-preguntas">
 	      
 	      			<label for="pregunta1"> ¿En qué cosas ocupas tu tiempo actualmente? </label>
-	      			<span class="counter">200</span>
+	      			<!--<span class="counter">200</span> -->
 	      			<textarea id="pregunta1" name="pregunta1" maxlength="200" placeholder="200 caracteres"></textarea>
 	      
-	      			<label for="pregunta3"> ¿Qué le puedes aportar a otras personas?? </label>
-	      			<span class="counter">200</span>
+	      			<label for="pregunta3"> ¿Qué le puedes aportar a otras personas? </label>
+	      			
 	      			<textarea id="pregunta3" name="pregunta3" maxlength="200" placeholder="200 caracteres"></textarea>
 	      			
 	      			<label for="pregunta2"> Intereses (etiquetas)</label>
@@ -167,8 +176,8 @@
 		<div id="titulo-eventos" data-role="header" >
 			<h1>ENRÓLATE EN UN EVENTO</h1>
 		</div>
-		<div data-role="content" data-theme="a">
-			<ul id="lista-eventos" data-role="listview"  data-theme="a" >
+		<div data-role="content" data-theme="b">
+			<ul id="lista-eventos" data-role="listview"  data-theme="c" >
 			 	
 			<!--	<li data-icon="plus">
 					<a id="evento-p1" href="#participantes">
@@ -198,13 +207,14 @@
 
 		</div>	
 
-		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
+		<div class="footer" data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
 			<div data-role="navbar">
-				<ul>
+				<h4>Powered by www.conectandomentes.com</h4>
+				<!--<ul>
 					<li><a href="#p2" data-icon="search" class="ui-btn-active">Explora</a></li>
 					<li><a href="#p2" data-icon="grid">Mis Eventos</a></li>
 					<li><a href="#p2" data-icon="star">Contactus</a></li>
-				</ul>
+				</ul>-->
 			</div>
 		</div>
 
@@ -215,33 +225,34 @@
 		<div data-role="header">
 			<h1></h1>
 		</div>
-		<div data-role="content">
+		<div data-role="content" data-theme="b">
 			
 			<div>
 				<img src="">
-				<h3>ALGUNA INFORMACIÓN PARA POTENCIAR EL NETWORKING:</h3>
+				<h3>PARA POTENCIAR LA EXPERIENCIA EN EL ESPACIO DE NETWORKING:</h3>
 			</div>
 				
 				<form id="form-preguntas2" >
 	      
-	      			<label for="pregunta4"> ¿Hay algún tema del no quisieras hablar? </label>
-	      			<span class=”counter”>200</span>
+	      			<label for="pregunta4"> ¿Hay algún tema del que no quisieras hablar? </label>
+	      			
 	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
 	      
 	      			<select id="pregunta5" name="pregunta5" data-native-menu="false">
 						<option placeholder="true">¿Qué perfil específico estás buscando?</option>
 						<option value="Administración/Negocios">Administración/Negocios</option>
-						<option value="Arte">Arte</option>
 						<option value="Dirección/Gerencia">Dirección/Gerencia</option>
-						<option value="Deporte">Deporte</option>
-						<option value="Economía/Contabilidad/Finanzas">Economía/Contabilidad/Finanzas</option>
 						<option value="Ingeniería/Técnico/Programador">Ingeniería/Técnico/Programador</option>
-						<option value="Legal">Legal</option>
+						<option value="Diseño gráfico">Diseño gráfico</option>
 						<option value="Marketing/Ventas">Marketing/Ventas</option>
+						<option value="Economía/Contabilidad/Finanzas">Economía/Contabilidad/Finanzas</option>
+						<option value="Literatura Redacción">Literatura Redacción</option>
+						<option value="Legal">Legal</option>
+						<option value="Deporte">Deporte</option>
+						<option value="Arte">Arte</option>
 						<option value="Medicina/Salud">Medicina/Salud</option>
 						<option value="Música">Música</option>
 						<option value="Recursos Humanos">Recursos Humanos</option>
-						<option value="Literatura Redacción">Literatura Redacción</option>
 						<option value="Ninguno en particular">Ninguno en particular</option>
 					</select>
 
@@ -271,8 +282,8 @@
 		<div data-role="header" >
 			<h1></h1>
 		</div>
-		<div data-role="content">
-			<ul id="lista-participantes" data-role="listview" data-theme="a" >
+		<div data-role="content" data-theme="b">
+			<ul id="lista-participantes" data-role="listview" data-theme="c" data-filter="true" data-filter-placeholder="Buscar Contactus">
 				<!-- <li>
 					<a href="#datos">
 						<img src="img/foto_yura.png">
@@ -287,11 +298,11 @@
 
 		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
 			<div data-role="navbar">
-				<ul>
+				<!--<ul>
 					<li><a href="#p2" data-icon="search" class="ui-btn-active">Explora</a></li>
 					<li><a href="#p2" data-icon="grid">Mis Eventos</a></li>
 					<li><a href="#p2" data-icon="star">Contactus</a></li>
-				</ul>
+				</ul>-->
 			</div>
 		</div>
 
@@ -301,7 +312,7 @@
 		<div data-role="header">
 			<h1></h1>
 		</div>
-		<div data-role="content" data-theme="a">
+		<div data-role="content" data-theme="b">
 			<article id="datos-top">
 				<img>
 				<article>
@@ -313,10 +324,14 @@
 			</article>
 
 			<div data-role="popup" id="des-contactu" data-theme="a" data-overlay-theme="b" class="ui-content" style="max-width:340px; padding-bottom:2em;">
-			    <h3>¿Aparecer en la lista de asistentes?</h3>
-			    <p>Quieres que tu información se adicione a la lista de asistentes.</p>
-			    <a id="btn-enrolarme" href="#eventos" data-role="button" data-rel="back" data-theme="b" data-icon="check" data-inline="true" data-mini="true">Enrolarme</a>
-			    <a href="#eventos" data-role="button" data-rel="back" data-inline="true" data-mini="true">Cancel</a>
+			    <h3>¿Desbloquear este ContactU?</h3>
+			    <p>Regálanos un Tweet a cambio de este ContactU.</p>
+
+			   <!-- <a id="btn-enrolarme" href="#eventos" data-role="button" data-rel="back" data-theme="b" data-icon="check" data-inline="true" data-mini="true">Enrolarme</a> -->
+
+			    <a data-role="button"  data-theme="b" data-icon="check" data-inline="true" data-mini="true" href="https://twitter.com/intent/tweet?screen_name=contactuapp&text=No esta al aire y yo ya lo estoy usando =p %23QuedaEnContactU http://www.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>
+
+			    <a id="btn-desbloquear" href="#eventos" data-role="button" data-rel="back" data-inline="true" data-mini="true">¡Ya! ;)</a>
 			</div>
 		
 			<section>
@@ -360,7 +375,7 @@
 				
 		</div>	
 		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
-			
+			<h4>Powered by www.conectandomentes.com</h4>
 		</div>
 	</div>
 

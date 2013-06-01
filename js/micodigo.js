@@ -10,6 +10,8 @@ const url_insertarPreguntas = "insertpreguntas.php?jsoncallback=?";
 const url_insertarPreguntas2 = "insertpreguntas2.php?jsoncallback=?";
 const url_registroUsuario = "registro.php?jsoncallback=?";
 const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
+const url_desbloquear = "desbloquearusuario.php?jsoncallback=?";
+
 
 var user;
 var id_evento = 0;
@@ -17,6 +19,17 @@ var pos_evento = 0;
 var id_asistente = 0;
 var id_contactu = 0;
 var pos_lista = 0;
+
+function validatePass(p1, p2) {
+	if (p1.value != p2.value) {
+		p2.setCustomValidity('Las dos contraseñas deben ser iguales.');
+	} else if (p1.value.length < 5) {
+		p2.setCustomValidity('La contraseña debe de ser mínimo 5 caracteres');
+	} else if (p1.value == p2.value){
+		p2.setCustomValidity('');
+	}
+
+}
 
 function onLinkedInLoad() {
      IN.Event.on(IN, "auth", onLinkedInAuth);
@@ -53,45 +66,45 @@ function displayProfiles(profiles) {
   
 	})
 
-				var datosUsuario = dEmail;
-			var datosPassword = dPassword;
+	var datosUsuario = dEmail;
+	var datosPassword = dPassword;
 
-		  	archivoValidacion = url_base + url_validacionUsuario;
+ 	archivoValidacion = url_base + url_validacionUsuario;
 			
-			$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
-			.done(function(respuestaServer) {
+	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
+	.done(function(respuestaServer) {
 				
-				if(respuestaServer.validacion == "ok"){
+	if(respuestaServer.validacion == "ok"){
 					
-				 	/// si la validacion es correcta, muestra la pantalla "home"
-				 	user = datosUsuario;
-				 	pass = datosPassword;
-					var elemento = respuestaServer.usuario[0];
-				 	if(elemento['mostrarPreguntas'] == 1){
-						$.mobile.changePage("#iniciar");
+		/// si la validacion es correcta, muestra la pantalla "home"
+		user = datosUsuario;
+		pass = datosPassword;
+		var elemento = respuestaServer.usuario[0];
+		if(elemento['mostrarPreguntas'] == 1){
+			$.mobile.changePage("#iniciar");
 
-						$('#i-datos-top img').attr("src", elemento['imagen']);
-						$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-						$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
-						$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
-						$elmt_p3 = $('<p>Correo: '+elemento['email']+'</p>');
+			$('#i-datos-top img').attr("src", elemento['imagen']);
+			$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
+			$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+			$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+			$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
-						$('#i-datos-top article').append($elmt_hd);
-						$('#i-datos-top article').append($elmt_p1);
-						$('#i-datos-top article').append($elmt_p2);
-						$('#i-datos-top article').append($elmt_p3);
+			$('#i-datos-top article').append($elmt_hd);
+			$('#i-datos-top article').append($elmt_p1);
+			$('#i-datos-top article').append($elmt_p2);
+			$('#i-datos-top article').append($elmt_p3);
 
-					}
-					else{
-						$.mobile.changePage("#eventos");
-					}
+		}
+		else{
+			$.mobile.changePage("#eventos");
+		}
 					//document.getElementById("t-nombre").innerHTML=datosUsuario;
 					//document.getElementById("evento-1").innerHTML=respuestaServer.numero;  
-				}else{
-				  /// ejecutar una conducta cuando la validacion falla
-				}
+		}else{
+		  /// ejecutar una conducta cuando la validacion falla
+		}
 		  
-			})
+	})
 	return false;
 
 }
@@ -104,16 +117,21 @@ $('#form-registro').submit(function() {
 	var dLinkedin = $("#linkedin").val();
 	var dTelefono = $("#telefono").val();	
 	var dAreas = $("#areas").val();
-	var dPassword = $("#pass").val();
+	//var pass = $("#p1").val();
+	//var dPassword = CryptoJS.SHA3(pass);
+
+	var dPassword =  $("#p1").val();
+	
+	alert(dPassword);
 	var dPicture = "http://contactu.co/app/img/avatar_mario.jpg";
 
   	archivoRegistro = url_base + url_registroUsuario;
 
-	$.mobile.changePage("#home");	
+
 	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword, picture:dPicture})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
-		 	/// si la validacion es correcta, muestra la pantalla "home"
+		 	$.mobile.changePage("#home");	
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
 		}
@@ -125,7 +143,8 @@ $('#form-registro').submit(function() {
 $('#formulario').submit(function() { 
 	// recolecta los valores que inserto el usuario
 	var datosUsuario = $("#nombredeusuario").val();
-	var datosPassword = $("#clave").val();
+	var pass = $("#clave").val();
+	var datosPassword = CryptoJS.SHA3(pass);
 
   	archivoValidacion = url_base + url_validacionUsuario;
 	
@@ -142,9 +161,9 @@ $('#formulario').submit(function() {
 
 				$('#i-datos-top img').attr("src", elemento['imagen']);
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-				$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
-				$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
-				$elmt_p3 = $('<p>Correo: '+elemento['email']+'</p>');
+				$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+				$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+				$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
 				$('#i-datos-top article').append($elmt_hd);
 				$('#i-datos-top article').append($elmt_p1);
@@ -188,6 +207,7 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
 				$elmt_a2 = $('<a class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+						
 				$elmt_a.append($elmt_img);
 				$elmt_a.append($elmt_h4);
 				$elmt_a.append($elmt_p);
@@ -223,7 +243,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 				var elemento = respuestaServer.usuarios[i];
 				$elmt_lip = $('<li></li>');
 			
-				if ((i<3)||(elemento['desbloqueado']==1)) {
+				if ((i<3)||(elemento['desbloqueado']==1)||(elemento['email']==user)) {
 					
 					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
 					$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
@@ -264,18 +284,18 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 	$('#datos-q4 p').empty();
 	$('#datos-q5 p').empty();
 	$('#datos-q6 p').empty();
-	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento})
+	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento, email:user})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
 				var elemento = respuestaServer.datos[0];
-								
-				if (pos_lista<3) {
+				
+				if ((pos_lista<3)||(elemento['desbloqueado']==1)||(elemento['email']==user)) {
 					$('#datos-top img').attr("src", elemento['foto']);
 					$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-					$elmt_p1 = $('<p>Area: '+elemento['area']+'</p>');
-					$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
-					$elmt_p3 = $('<p>Correo: '+elemento['correo']+'</p>');
+					$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+					$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+					$elmt_p3 = $('<p>'+elemento['correo']+'</p>');
 
 					$('#datos-top article').append($elmt_hd);
 					$('#datos-top article').append($elmt_p1);
@@ -285,7 +305,7 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 					$('#datos-top img').attr("src", elemento['avatar']);	
 					$elmt_hd = $('<h4>'+elemento['area']+'</h4>');
 					$elmt_btn = $('<a href="#des-contactu" onclick="almaceneIdContactu('+elemento['id']+')" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-theme="a">Desbloquear ContactU</a>');
-
+					//$elmt_a2 = $('<a href="https://twitter.com/intent/tweet?screen_name=zerolf&text=\'Voy a desbloquear un ContactU\' %23quedaenContactU http://www.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>');
 					$('#datos-top article').append($elmt_hd);
 					$('#datos-top article').append($elmt_btn);
 					$('#datos-top article').trigger('create');
@@ -356,13 +376,9 @@ function almaceneIdParticipante(id_prt, pos){
 
 function almaceneIdContactu(id_ctu){
 	id_contactu = id_ctu;
-	alert(id_ctu);
+	
 }
 
-
-
-
-	
 $('#form-preguntas').submit(function() { 
 	// recolecta los valores que inserto el usuario 	background-image:url(../img/enrolarme.png);
 	var p1 = $("#pregunta1").val();
@@ -413,22 +429,38 @@ $('#form-preguntas2').submit(function() {
 	return false;
 })
 
-
-
 $('#btn-enrolarme').click(function(){
 
 	archivoEnrolarse = url_base + url_enrolarse;
 
-
 	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
 	.done(function(respuesta) {
-
 		if(respuesta.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	id_ev = "evento-"+pos_evento;
 		 	document.getElementById(id_ev).innerHTML=respuesta.numero;
-		 
 		 	$.mobile.changePage("#preguntas2");
+			// document.getElementById("s1").innerHTML=count+1;
+
+		}else{
+		//	document.getElementById("#mensajes").innerHTML="Ya estas registrado en este evento";
+		  	$.mobile.changePage("#eventos");
+		}
+	})
+
+	return false;
+});
+
+$('#btn-desbloquear').click(function(){
+
+	archivoDesbloquear = url_base + url_desbloquear;
+
+	$.getJSON( archivoDesbloquear, {user:user,contactu:id_contactu})
+	.done(function(respuesta) {
+
+		if(respuesta.validacion == "ok"){
+		 	/// si la validacion es correcta, muestra la pantalla "home"
+		 	$.mobile.changePage("#eventos");
 			// document.getElementById("s1").innerHTML=count+1;
 
 		}else{
@@ -440,4 +472,5 @@ $('#btn-enrolarme').click(function(){
 
 	return false;
 });
+
 

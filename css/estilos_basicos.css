@@ -1,6 +1,18 @@
-#home img{
-	margin: 10% 0% 10% 25%;
+
+#home img,
+#home #login{
+	display: block;
 }
+
+#home img:first-child,
+#home img:nth-child(2){
+	margin: 5px auto;
+}
+#home #login{
+	margin: 15px auto 8px;
+	text-align: center;
+}
+
 /* div titulo eventos*/
 #titulo-eventos {
 	height: 42px;
@@ -25,7 +37,7 @@
 
 /* Arreglos datos de los usuarios */
 #datos-top{
-	height: 135px;
+	height: 145px;
 }
 
 #datos-top img{
@@ -38,10 +50,13 @@
 
 
 #datos section h4{
-	background-color: #569987;
 	text-align: center;
 	margin: 0;
 }
 #datos section p{
+	text-align: center;
+}
+
+.footer{
 	text-align: center;
 }
