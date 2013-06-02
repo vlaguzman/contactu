@@ -31,6 +31,11 @@
 	background-image: url(../img/enrolarme.png);
 	width: 90px;
 }
+.links-registrado{
+	background-image: url(../img/registrado.jpeg);
+	width: 90px;
+}
+
 .ui-btn-icon-notext .ui-btn-inner {
 	height: 0;
 }
@@ -59,4 +64,10 @@
 
 .footer{
 	text-align: center;
+}
+
+#form-registro input:focus:invalid, 
+#form-registro textarea:focus:invalid{
+    box-shadow: 0 0 5px #d45252;
+    border-color: #b03535
 }

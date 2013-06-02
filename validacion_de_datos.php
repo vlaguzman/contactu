@@ -4,7 +4,7 @@
 $usuarioEnviado = $_GET['usuario'];
 $passwordEnviado = $_GET['password'];
 
-$passwordEnviado = crypt($passwordEnviado);
+$passwordEnviadoE = sha1($passwordEnviado);
  
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -56,7 +56,7 @@ $resultados = array();
 
  
 /* verifica que el usuario y password concuerden correctamente */
-if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido ){
+if(  $usuarioEnviado == $usuarioValido  && $passwordEnviadoE == $passwordValido ){
 	/*esta informacion se envia solo si la validacion es correcta */
 	$resultados["mensaje"] = "Validacion Correcta";
 	$resultados["validacion"] = "ok";
@@ -65,7 +65,7 @@ if(  $usuarioEnviado == $usuarioValido  && $passwordEnviado == $passwordValido )
  
 }else{
 	/*esta informacion se envia si la validacion falla */
-	$resultados["mensaje"] = " Aca sí: Usuario y password incorrectos";
+	$resultados["mensaje"] = "Usuario o password incorrectos p1: ".$passwordEnviadoE." p2: ".$passwordValido;
 	$resultados["validacion"] = "error";
 }
  

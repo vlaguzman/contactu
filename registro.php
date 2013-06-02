@@ -8,7 +8,7 @@ $telefono = $_GET["telefono"];
 $pass = $_GET["password"];
 $areas = $_GET["areas"];
 $picture = $_GET["picture"];
-$pass = crypt($pass);
+$passe = sha1($pass);
 
 $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Error conexión BD");
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
@@ -16,7 +16,7 @@ mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base d
 //mysql_select_db('wasabi', $conexion)or die('No se encuentra la base de datos');
 
 
-$query = sprintf("INSERT INTO usuario (nombre, email, pass, linkedin, twitter, telefono, areas, img) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')", $nombre, $email, $pass, $linkedin, $twitter, $telefono, $areas, $picture);
+$query = sprintf("INSERT INTO usuario (nombre, email, pass, linkedin, twitter, telefono, areas, img) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')", $nombre, $email, $passe, $linkedin, $twitter, $telefono, $areas, $picture);
 //mysql_query("UPDATE wsb_plato SET precio='"+$precio+"' WHERE FirstName='Peter' AND LastName='Griffin'");
 $result = mysql_query($query);
 

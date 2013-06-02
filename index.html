@@ -76,7 +76,7 @@
 		<div data-role="header">
 			<h1>Registro</h1>
 		</div>
-		<div data-role="content" data-theme="a">
+		<div data-role="content" data-theme="b">
 			<form id="form-registro">
 				
 				<label for="nombre">Nombre</label>
@@ -85,12 +85,11 @@
 				<label for="email">Email</label>
 				<input type="email" id="email" name="email" required>
 				
-				
-                <label for="password">Password</label><input type='password' id='p1' required><br /><br />
+                <label for="password">Password</label><input type='password' id='p1' required>
                 <label for="password">Confirm Password</label><input type='password' onfocus="validatePass(document.getElementById('p1'), this);" oninput="validatePass(document.getElementById('p1'), this);" required>
             	
+            	<label for="areas">Selecciona el perfil con el que te identificas más:</label>
 				<select id="areas" name="areas" data-native-menu="false" required>
-					<option placeholder="true">Con qué perfil te identificas más:</option>
 					<option value="Administración/Negocios">Administración/Negocios</option>
 					<option value="Arte">Arte</option>
 					<option value="Dirección/Gerencia">Dirección/Gerencia</option>
@@ -235,11 +234,10 @@
 				<form id="form-preguntas2" >
 	      
 	      			<label for="pregunta4"> ¿Hay algún tema del que no quisieras hablar? </label>
-	      			
 	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
 	      
+	      			<label for="pregunta5">¿Qué perfil específico estás buscando?</label>
 	      			<select id="pregunta5" name="pregunta5" data-native-menu="false">
-						<option placeholder="true">¿Qué perfil específico estás buscando?</option>
 						<option value="Administración/Negocios">Administración/Negocios</option>
 						<option value="Dirección/Gerencia">Dirección/Gerencia</option>
 						<option value="Ingeniería/Técnico/Programador">Ingeniería/Técnico/Programador</option>
@@ -256,9 +254,8 @@
 						<option value="Ninguno en particular">Ninguno en particular</option>
 					</select>
 
-
+					<label for="pregunta6">¿Esperas encontrar algo en particular?</label>
 	      			 <select id="pregunta6" name="pregunta6" data-native-menu="false">
-						<option placeholder="true">¿Esperas encontrar algo en particular?</option>
 						<option value="Nuevas oportunidades de trabajo">Nuevas oportunidades de trabajo</option>
 						<option value="Contacto de potenciales socios">Contacto de potenciales socios</option>
 						<option value="Contacto de potenciales clientes">Contacto de potenciales clientes</option>

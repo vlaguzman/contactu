@@ -11,7 +11,8 @@ const url_insertarPreguntas2 = "insertpreguntas2.php?jsoncallback=?";
 const url_registroUsuario = "registro.php?jsoncallback=?";
 const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
 const url_desbloquear = "desbloquearusuario.php?jsoncallback=?";
-
+const url_estaregistrado = "estaregistrado.php?jsoncallback=?";
+const url_eventosxusuario = "eventosxusuario.php?jsoncallback=?";
 
 var user;
 var id_evento = 0;
@@ -119,9 +120,7 @@ $('#form-registro').submit(function() {
 	var dAreas = $("#areas").val();
 	//var pass = $("#p1").val();
 	//var dPassword = CryptoJS.SHA3(pass);
-
 	var dPassword =  $("#p1").val();
-	
 	alert(dPassword);
 	var dPicture = "http://contactu.co/app/img/avatar_mario.jpg";
 
@@ -130,6 +129,7 @@ $('#form-registro').submit(function() {
 
 	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword, picture:dPicture})
 	.done(function(respuestaServer) {
+
 		if(respuestaServer.validacion == "ok"){
 		 	$.mobile.changePage("#home");	
 		}else{
@@ -143,14 +143,12 @@ $('#form-registro').submit(function() {
 $('#formulario').submit(function() { 
 	// recolecta los valores que inserto el usuario
 	var datosUsuario = $("#nombredeusuario").val();
-	var pass = $("#clave").val();
-	var datosPassword = CryptoJS.SHA3(pass);
-
+	var datosPassword = $("#clave").val();
   	archivoValidacion = url_base + url_validacionUsuario;
 	
 	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
 	.done(function(respuestaServer) {
-
+		alert(respuestaServer.mensaje);
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 		 	user = datosUsuario;
@@ -190,6 +188,9 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 
 	archivoEventos = url_base + url_eventos;
+	archivoValidarRegistro = url_base + url_estaregistrado;
+	archivoEventosUsuario = url_base + url_eventosxusuario;
+
 
 	$.getJSON( archivoEventos, { })
 	.done(function(respuestaServer) {
@@ -206,8 +207,8 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
-				$elmt_a2 = $('<a class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
-						
+				
+				$elmt_a2 = $('<a id="btn-enrl-'+elemento['id']+'" class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
 				$elmt_a.append($elmt_img);
 				$elmt_a.append($elmt_h4);
 				$elmt_a.append($elmt_p);
@@ -224,6 +225,29 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 		$("#lista-eventos").listview('refresh');
   
 	})
+
+
+	$.getJSON( archivoEventosUsuario, {email: user})
+	.done(function(respuesta) {
+		alert("entramos");
+		alert("a ver 123 "+respuesta.validacion);
+		if(respuesta.validacion == "ok"){
+			for (var i = 0; i < respuesta.eventos.length; i++) {
+				var elemento = respuesta.eventos[i];
+				alert("elemento no. "+i+" id "+ elemento['id_evento']);
+				
+
+		 		newImage = "url('../img/registrado.jpeg')";
+		 		idBtn = "btn-enrl-"+elemento['id_evento'];
+        		document.getElementById(idBtn).style.backgroundImage = newImage;
+
+			};
+		}else{
+		
+		}
+
+	})
+
 	return false;			
 
 })
@@ -430,15 +454,18 @@ $('#form-preguntas2').submit(function() {
 })
 
 $('#btn-enrolarme').click(function(){
-
+	
 	archivoEnrolarse = url_base + url_enrolarse;
 
 	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
 	.done(function(respuesta) {
 		if(respuesta.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
+		 	
 		 	id_ev = "evento-"+pos_evento;
+		 	id_btn = "#btn-enrl-"+pos_evento;
 		 	document.getElementById(id_ev).innerHTML=respuesta.numero;
+		 	
 		 	$.mobile.changePage("#preguntas2");
 			// document.getElementById("s1").innerHTML=count+1;
 
