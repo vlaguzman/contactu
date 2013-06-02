@@ -13,6 +13,7 @@ const url_enrolarse = "enlistarusuario.php?jsoncallback=?";
 const url_desbloquear = "desbloquearusuario.php?jsoncallback=?";
 const url_estaregistrado = "estaregistrado.php?jsoncallback=?";
 const url_eventosxusuario = "eventosxusuario.php?jsoncallback=?";
+const url_existeusuario = "existeusuario.php?jsoncallback=?";
 
 var user;
 var id_evento = 0;
@@ -53,59 +54,75 @@ function displayProfiles(profiles) {
 	var dAreas = member.industry;
 	var dPassword = member.emailAddress;
 	var dPicture = member.pictureUrl;
-	 archivoRegistro = url_base + url_registroUsuario;
-	
+	var existe = false;
 
-	$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword,picture:dPicture})
-	.done(function(respuestaServer) {
-		if(respuestaServer.validacion == "ok"){
-			
-		 	/// si la validacion es correcta, muestra la pantalla "home"
+	archivoRegistro = url_base + url_registroUsuario;
+	archivoExisteUsuario = url_base + url_existeusuario;
+
+	$.getJSON( archivoExisteUsuario, {email:dEmail})
+	.done(function(respuestaServerExiste) {
+		if(respuestaServerExiste.validacion == "ok"){
+			existe = true;
+			$.mobile.changePage("#iniciar");
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
 		}
   
 	})
 
+	if(!existe){
+		$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword,picture:dPicture})
+		.done(function(respuestaServer) {
+			if(respuestaServer.validacion == "ok"){
+				$.mobile.changePage("#iniciar");
+		 	/// si la validacion es correcta, muestra la pantalla "home"
+			}else{
+		  /// ejecutar una conducta cuando la validacion falla
+			}
+  
+		})
+
+	}
+
 	var datosUsuario = dEmail;
 	var datosPassword = dPassword;
 
- 	archivoValidacion = url_base + url_validacionUsuario;
+ // 	archivoValidacion = url_base + url_validacionUsuario;
 			
-	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
-	.done(function(respuestaServer) {
+	// $.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
+	// .done(function(respuestaServer) {
 				
-	if(respuestaServer.validacion == "ok"){
+	// if(respuestaServer.validacion == "ok"){
 					
-		/// si la validacion es correcta, muestra la pantalla "home"
-		user = datosUsuario;
-		pass = datosPassword;
-		var elemento = respuestaServer.usuario[0];
-		if(elemento['mostrarPreguntas'] == 1){
-			$.mobile.changePage("#iniciar");
+	// 	/// si la validacion es correcta, muestra la pantalla "home"
+	// 	user = datosUsuario;
+	// 	pass = datosPassword;
+	// 	var elemento = respuestaServer.usuario[0];
+	// 	if(elemento['mostrarPreguntas'] == 1){
+	// 		$.mobile.changePage("#iniciar");
 
-			$('#i-datos-top img').attr("src", elemento['imagen']);
-			$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-			$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-			$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
-			$elmt_p3 = $('<p>'+elemento['email']+'</p>');
+	// 		$('#i-datos-top img').attr("src", elemento['imagen']);
+	// 		$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
+	// 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+	// 		$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+	// 		$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
-			$('#i-datos-top article').append($elmt_hd);
-			$('#i-datos-top article').append($elmt_p1);
-			$('#i-datos-top article').append($elmt_p2);
-			$('#i-datos-top article').append($elmt_p3);
+	// 		$('#i-datos-top article').append($elmt_hd);
+	// 		$('#i-datos-top article').append($elmt_p1);
+	// 		$('#i-datos-top article').append($elmt_p2);
+	// 		$('#i-datos-top article').append($elmt_p3);
 
-		}
-		else{
-			$.mobile.changePage("#eventos");
-		}
-					//document.getElementById("t-nombre").innerHTML=datosUsuario;
-					//document.getElementById("evento-1").innerHTML=respuestaServer.numero;  
-		}else{
-		  /// ejecutar una conducta cuando la validacion falla
-		}
+	// 	}
+	// 	else{
+	// 		$.mobile.changePage("#eventos");
+	// 	}
+	// 				//document.getElementById("t-nombre").innerHTML=datosUsuario;
+	// 				//document.getElementById("evento-1").innerHTML=respuestaServer.numero;  
+	// 	}else{
+	// 	  /// ejecutar una conducta cuando la validacion falla
+	// 	}
 		  
-	})
+	// })
 	return false;
 
 }
@@ -237,9 +254,10 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				alert("elemento no. "+i+" id "+ elemento['id_evento']);
 				
 
-		 		newImage = "url('../img/registrado.jpeg')";
+		 		newImage = "url(../img/registrado.jpeg);";
 		 		idBtn = "btn-enrl-"+elemento['id_evento'];
         		document.getElementById(idBtn).style.backgroundImage = newImage;
+        	
 
 			};
 		}else{
