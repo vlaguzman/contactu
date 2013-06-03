@@ -22,6 +22,8 @@ var id_asistente = 0;
 var id_contactu = 0;
 var pos_lista = 0;
 
+
+
 function validatePass(p1, p2) {
 	if (p1.value != p2.value) {
 		p2.setCustomValidity('Las dos contraseñas deben ser iguales.');
@@ -63,7 +65,8 @@ function displayProfiles(profiles) {
 	.done(function(respuestaServerExiste) {
 		if(respuestaServerExiste.validacion == "ok"){
 			existe = true;
-			user = dEmail;
+			localStorage["usermail"]= dEmail;
+			//user = dEmail;
 			$.mobile.changePage("#eventos");
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
@@ -75,7 +78,9 @@ function displayProfiles(profiles) {
 		$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword,picture:dPicture})
 		.done(function(respuestaServer) {
 			if(respuestaServer.validacion == "ok"){
-				user = dEmail;
+				//user = dEmail;
+				localStorage["usermail"]= dEmail;
+
 				$.mobile.changePage("#iniciar");
 				$('#i-datos-top img').attr("src", elemento['imagen']);
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
@@ -95,7 +100,7 @@ function displayProfiles(profiles) {
 		})
 
 	}
-
+	
 	var datosUsuario = dEmail;
 	var datosPassword = dPassword;
 
@@ -150,7 +155,7 @@ $('#form-registro').submit(function() {
 	//var pass = $("#p1").val();
 	//var dPassword = CryptoJS.SHA3(pass);
 	var dPassword =  $("#p1").val();
-	//alert(dPassword);
+	
 	var dPicture = "http://contactu.co/app/img/avatar_mario.jpg";
 
   	archivoRegistro = url_base + url_registroUsuario;
@@ -177,10 +182,11 @@ $('#formulario').submit(function() {
 	
 	$.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
 	.done(function(respuestaServer) {
-		alert(respuestaServer.mensaje);
+		
 		if(respuestaServer.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
-		 	user = datosUsuario;
+		 	//user = datosUsuario;
+		 	localStorage["usermail"]= datosUsuario;
 		 	pass = datosPassword;
 		 	var elemento = respuestaServer.usuario[0];
 		 	if(elemento['mostrarPreguntas'] == 1){
@@ -215,7 +221,9 @@ $('#formulario').submit(function() {
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
-
+	var f = new Date();
+	var fechaHoy = f.getFullYear() + "-" + (f.getMonth()+1) + "-" + f.getDate();
+	var datayear = Date.parse(fechaHoy);
 	archivoEventos = url_base + url_eventos;
 	archivoValidarRegistro = url_base + url_estaregistrado;
 	archivoEventosUsuario = url_base + url_eventosxusuario;
@@ -227,25 +235,58 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 		if(respuestaServer.validacion == "ok"){
 			$('#lista-eventos li').remove();
 
-			for (var i = 0; i < respuestaServer.registros.length; i++) {
-				
-				var elemento = respuestaServer.registros[i];
-				$elmt_li = $('<li data-icon="plus"></li>');
-				$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
-				$elmt_img = $('<img src="'+elemento['imagen']+'">');
-				$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
-				$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
-				$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
-				
-				$elmt_a2 = $('<a id="btn-enrl-'+elemento['id']+'" class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
-				$elmt_a.append($elmt_img);
-				$elmt_a.append($elmt_h4);
-				$elmt_a.append($elmt_p);
-				$elmt_a.append($elmt_span);
-				$elmt_li.append($elmt_a);
-				$elmt_li.append($elmt_a2);
-				$('#lista-eventos').append($elmt_li);
+			$elmt_lidiv = $('<li data-role="list-divider">Eventos Futuros</li>');
+			$('#lista-eventos').append($elmt_lidiv);
 
+			for (var i = 0; i < respuestaServer.registros.length; i++) {
+				var elemento = respuestaServer.registros[i];
+				var dataevent =  Date.parse(elemento['fecha']);
+				if (dataevent>datayear) {
+					$elmt_li = $('<li data-icon="plus"></li>');
+					$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
+					$elmt_img = $('<img src="'+elemento['imagen']+'">');
+					$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
+					$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
+					
+					
+					$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
+					$elmt_a2 = $('<a id="btn-enrl-'+elemento['id']+'" class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+					$elmt_a.append($elmt_img);
+					$elmt_a.append($elmt_h4);
+					$elmt_a.append($elmt_p);
+					$elmt_a.append($elmt_span);
+					$elmt_li.append($elmt_a);
+					$elmt_li.append($elmt_a2);
+
+					$('#lista-eventos').append($elmt_li);
+				}
+			};
+
+			$elmt_lidiv2 = $('<li data-role="list-divider">Eventos Pasados</li>');
+			$('#lista-eventos').append($elmt_lidiv2);
+
+			for (var i = 0; i < respuestaServer.registros.length; i++) {
+				var elemento = respuestaServer.registros[i];
+				var dataevent =  Date.parse(elemento['fecha']);
+				if (dataevent<datayear) {
+					$elmt_li = $('<li data-icon="plus"></li>');
+					$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
+					$elmt_img = $('<img src="'+elemento['imagen']+'">');
+					$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
+					$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
+					
+					
+					$elmt_span = $('<span id="evento-'+i+'" class="ui-li-count">'+elemento['registros']+'</span>');
+					$elmt_a2 = $('<a id="btn-enrl-'+elemento['id']+'" class="links-plus" onclick="almaceneIdPosEvento('+elemento['id']+', '+i+')" href="#'+elemento['estado']+'" data-rel="popup" data-position-to="window" data-transition="pop">Enrolarme</a>');
+					$elmt_a.append($elmt_img);
+					$elmt_a.append($elmt_h4);
+					$elmt_a.append($elmt_p);
+					$elmt_a.append($elmt_span);
+					$elmt_li.append($elmt_a);
+					$elmt_li.append($elmt_a2);
+
+					$('#lista-eventos').append($elmt_li);
+				}
 			};
 
 		}else{
@@ -256,20 +297,16 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	})
 
 
-	$.getJSON( archivoEventosUsuario, {email: user})
+	$.getJSON( archivoEventosUsuario, {email:localStorage["usermail"]})
 	.done(function(respuesta) {
 		
-		//alert(user+" a ver los eventos"+respuesta.eventos.length);
+		
 		if(respuesta.validacion == "ok"){
 			for (var i = 0; i < respuesta.eventos.length; i++) {
 				var elemento = respuesta.eventos[i];
-
-			//	alert("elemento no. "+i+" id "+ elemento['id_evento']);
-
 		 	//	newImage = "url(../img/registrado.jpeg);";
 		 		idBtn = "#btn-enrl-"+elemento['id_evento'];
         	//	document.getElementById(idBtn).style.backgroundImage = newImage;
-        	//	alert(idBtn);
         		$("#btn-enrl-"+elemento['id_evento']).removeClass("links-plus").addClass("links-registrado");
         	
 
@@ -292,7 +329,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 
   	archivoParticipantes = url_base + url_asistentes;
 	
-	$.getJSON( archivoParticipantes, {idevento: id_evento, email: user})
+	$.getJSON( archivoParticipantes, {idevento: id_evento, email: localStorage["usermail"]})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
@@ -301,7 +338,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 				var elemento = respuestaServer.usuarios[i];
 				$elmt_lip = $('<li></li>');
 			
-				if ((i<3)||(elemento['desbloqueado']==1)||(elemento['email']==user)) {
+				if ((i<3)||(elemento['desbloqueado']==1)||(elemento['email']==localStorage["usermail"])) {
 					
 					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
 					$elmt_imgp = $('<img src="'+elemento['imagen']+'">');
@@ -342,13 +379,13 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 	$('#datos-q4 p').empty();
 	$('#datos-q5 p').empty();
 	$('#datos-q6 p').empty();
-	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento, email:user})
+	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento, email:localStorage["usermail"]})
 	.done(function(respuestaServer) {
 		if(respuestaServer.validacion == "ok"){
 			
 				var elemento = respuestaServer.datos[0];
 				
-				if ((pos_lista<3)||(elemento['desbloqueado']==1)||(elemento['email']==user)) {
+				if ((pos_lista<3)||(elemento['desbloqueado']==1)||(elemento['email']==localStorage["usermail"])) {
 					$('#datos-top img').attr("src", elemento['foto']);
 					$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 					$elmt_p1 = $('<p>'+elemento['area']+'</p>');
@@ -446,7 +483,7 @@ $('#form-preguntas').submit(function() {
   	archivoPreguntas = url_base + url_insertarPreguntas;
 
   //	$.mobile.changePage("#eventos");  
-	$.getJSON( archivoPreguntas, {user:user,p1:p1,p2:p2,p3:p3})
+	$.getJSON( archivoPreguntas, {user:localStorage["usermail"],p1:p1,p2:p2,p3:p3})
 	.done(function(respuestaServer) {
 	
 		if(respuestaServer.validacion == "ok"){
@@ -471,7 +508,7 @@ $('#form-preguntas2').submit(function() {
 
   	archivoPreguntas = url_base + url_insertarPreguntas2;
 
-	$.getJSON( archivoPreguntas, {user:user,evento:id_evento,p1:p1,p2:p2,p3:p3})
+	$.getJSON( archivoPreguntas, {user:localStorage["usermail"],evento:id_evento,p1:p1,p2:p2,p3:p3})
 	.done(function(respuestaServer) {
 	
 		if(respuestaServer.validacion == "ok"){
@@ -491,7 +528,7 @@ $('#btn-enrolarme').click(function(){
 	
 	archivoEnrolarse = url_base + url_enrolarse;
 
-	$.getJSON( archivoEnrolarse, {user:user,idevento:id_evento})
+	$.getJSON( archivoEnrolarse, {user:localStorage["usermail"],idevento:id_evento})
 	.done(function(respuesta) {
 		if(respuesta.validacion == "ok"){
 		 	/// si la validacion es correcta, muestra la pantalla "home"
@@ -516,7 +553,7 @@ $('#btn-desbloquear').click(function(){
 
 	archivoDesbloquear = url_base + url_desbloquear;
 
-	$.getJSON( archivoDesbloquear, {user:user,contactu:id_contactu})
+	$.getJSON( archivoDesbloquear, {user:localStorage["usermail"],contactu:id_contactu})
 	.done(function(respuesta) {
 
 		if(respuesta.validacion == "ok"){
