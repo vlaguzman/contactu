@@ -63,7 +63,8 @@ function displayProfiles(profiles) {
 	.done(function(respuestaServerExiste) {
 		if(respuestaServerExiste.validacion == "ok"){
 			existe = true;
-			$.mobile.changePage("#iniciar");
+			user = dEmail;
+			$.mobile.changePage("#eventos");
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
 		}
@@ -74,7 +75,18 @@ function displayProfiles(profiles) {
 		$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword,picture:dPicture})
 		.done(function(respuestaServer) {
 			if(respuestaServer.validacion == "ok"){
+				user = dEmail;
 				$.mobile.changePage("#iniciar");
+				$('#i-datos-top img').attr("src", elemento['imagen']);
+				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
+		 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
+		 		$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+		 		$elmt_p3 = $('<p>'+elemento['email']+'</p>');
+
+		 		$('#i-datos-top article').append($elmt_hd);
+		 		$('#i-datos-top article').append($elmt_p1);
+		 		$('#i-datos-top article').append($elmt_p2);
+		 		$('#i-datos-top article').append($elmt_p3);
 		 	/// si la validacion es correcta, muestra la pantalla "home"
 			}else{
 		  /// ejecutar una conducta cuando la validacion falla
@@ -246,23 +258,26 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 	$.getJSON( archivoEventosUsuario, {email: user})
 	.done(function(respuesta) {
-		alert("entramos");
-		alert("a ver 123 "+respuesta.validacion);
+		
+		alert(user+" a ver los eventos"+respuesta.eventos.length);
 		if(respuesta.validacion == "ok"){
 			for (var i = 0; i < respuesta.eventos.length; i++) {
 				var elemento = respuesta.eventos[i];
-				alert("elemento no. "+i+" id "+ elemento['id_evento']);
-				
 
-		 		newImage = "url(../img/registrado.jpeg);";
-		 		idBtn = "btn-enrl-"+elemento['id_evento'];
-        		document.getElementById(idBtn).style.backgroundImage = newImage;
+				alert("elemento no. "+i+" id "+ elemento['id_evento']);
+
+		 	//	newImage = "url(../img/registrado.jpeg);";
+		 		idBtn = "#btn-enrl-"+elemento['id_evento'];
+        	//	document.getElementById(idBtn).style.backgroundImage = newImage;
+        		alert(idBtn);
+        		$("#btn-enrl-"+elemento['id_evento']).removeClass("links-plus").addClass("links-registrado");
         	
 
 			};
 		}else{
 		
 		}
+		$('#lista-eventos li a').trigger('create');
 
 	})
 
