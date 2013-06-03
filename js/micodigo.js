@@ -150,7 +150,7 @@ $('#form-registro').submit(function() {
 	//var pass = $("#p1").val();
 	//var dPassword = CryptoJS.SHA3(pass);
 	var dPassword =  $("#p1").val();
-	alert(dPassword);
+	//alert(dPassword);
 	var dPicture = "http://contactu.co/app/img/avatar_mario.jpg";
 
   	archivoRegistro = url_base + url_registroUsuario;
@@ -259,17 +259,17 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	$.getJSON( archivoEventosUsuario, {email: user})
 	.done(function(respuesta) {
 		
-		alert(user+" a ver los eventos"+respuesta.eventos.length);
+		//alert(user+" a ver los eventos"+respuesta.eventos.length);
 		if(respuesta.validacion == "ok"){
 			for (var i = 0; i < respuesta.eventos.length; i++) {
 				var elemento = respuesta.eventos[i];
 
-				alert("elemento no. "+i+" id "+ elemento['id_evento']);
+			//	alert("elemento no. "+i+" id "+ elemento['id_evento']);
 
 		 	//	newImage = "url(../img/registrado.jpeg);";
 		 		idBtn = "#btn-enrl-"+elemento['id_evento'];
         	//	document.getElementById(idBtn).style.backgroundImage = newImage;
-        		alert(idBtn);
+        	//	alert(idBtn);
         		$("#btn-enrl-"+elemento['id_evento']).removeClass("links-plus").addClass("links-registrado");
         	
 
@@ -277,7 +277,8 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 		}else{
 		
 		}
-		$('#lista-eventos li a').trigger('create');
+		$("#lista-eventos").listview('refresh');
+	//	$('#lista-eventos li a').trigger('create');
 
 	})
 
