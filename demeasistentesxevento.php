@@ -7,7 +7,7 @@ $conexion = mysql_connect("localhost", "brain140_contact", "1de4s") or die ("Err
 mysql_select_db('brain140_contactu', $conexion)or die('No se encuentra la base de datos');
 
 $id_pregunta = 2;
-$consulta = sprintf("SELECT t1.id_usuario, t2.nombre, t2.email, t2.areas, t2.img, t2.avatar, t3.respuesta FROM registro AS t1, usuario AS t2, respuesta AS t3
+$consulta = sprintf("SELECT DISTINCT t1.id_usuario, t2.nombre, t2.email, t2.areas, t2.img, t2.avatar, t3.respuesta FROM registro AS t1, usuario AS t2, respuesta AS t3
 	WHERE t1.id_usuario = t2.id AND t3.id_usuario = t2.id AND t1.id_evento=%s AND t3.id_pregunta=%s", $id_evento, $id_pregunta);
 $resultado = mysql_query($consulta, $conexion) or die ('Error en SQL: '.$consulta);
 

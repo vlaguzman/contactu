@@ -12,7 +12,10 @@
 
 -->
 <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+<link rel="stylesheet" href="css/contactu-themes.css" />
+
 <link rel="stylesheet" type="text/css" href="css/estilos_basicos.css">
+<link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
 
 <!-- SHA3 -->
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
@@ -47,25 +50,36 @@
 		</div>
 		<div data-role="content" data-theme="a">
 			<img src="img/logo.png">
-			<img src="img/copy.png">
-
-			
+			<!--<img src="img/copy.png">-->
+			<h1 id="bumperstick">Hacemos visibles ContactUs Efectivos</h1>
 			<div id="login">
 				<script type="IN/Login"></script>
 			</div>
+			<div id="msj-error">
+				
+			</div>
 			<form id="formulario" >
       
-      			<input type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email" required>
-     			<input type="password" id="clave" name="clave" placeholder="Contraseña" >
+      			<input data-theme="b" type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email" required>
+     			<input data-theme="b" type="password" id="clave" name="clave" placeholder="Contraseña" >
  
-      			<input type="submit" value="Iniciar Sesión" id="botonLogin">
+      			<input data-theme="b" type="submit" value="Iniciar Sesión" id="botonLogin">
       
     		</form>	
 	
-	 		<a href="#registro" data-role="button" data-theme="a"> Registrarse </a>
+	 		<a data-theme="b" href="#registro" data-role="button" data-theme="a"> Registrarse </a>
 
 	 		
 		</div>	
+
+		<div id="redes-home">
+			<a class="brand" href="https://www.facebook.com/contactuapp" target="_blank"> 
+	       		<img src="img/fb.png"/> 
+	      	</a>
+	      	<a class="brand" href="http://twitter.com/contactuapp" target="_blank">   
+	       	 <img src="img/tw.png"/> 
+	      	</a> 
+		</div>
 
 		<div data-role="footer" class="ui-bar" data-position="fixed" data-id="footer1">
 			
@@ -116,6 +130,7 @@
 
 				<input type="submit" value="enviar" id="botonRegistro"/>
 			</form>
+
 		</div>	
 		<div data-role="footer" class="ui-bar">
 			<h4>www.contactu.co</h4>		
@@ -141,6 +156,7 @@
 			<div>
 				<img src="">
 				<h3>DATE A CONOCER PARA QUEDAR EN CONTACTU</h3>
+				<h3>Con ContactU podrás hacerte visible a los eventos que asistes y ver el perfil e intereses de otros participantes.</h3>
 			</div>
 				
 				<form id="form-preguntas">
@@ -153,7 +169,7 @@
 	      			
 	      			<textarea id="pregunta3" name="pregunta3" maxlength="200" placeholder="200 caracteres"></textarea>
 	      			
-	      			<label for="pregunta2"> Intereses (etiquetas)</label>
+	      			<label for="pregunta2"> Intereses (etiquetas). Así sabrás de qué más puedes hablar con otros participantes.</label>
 					<p>Ej: Cine, viajes, tecnología, videojuegos. </p>
 	      			<textarea id="pregunta2" name="pregunta2" maxlength="200"></textarea>
 
@@ -168,11 +184,15 @@
 	</div>
 
 
-	<div data-role="page" data-theme="a" id="eventos">
-		<div data-role="header" >
-			<h1></h1>
+
+	<div data-role="page" data-theme="c" id="eventos">
+	
+		<div data-theme="a" data-role="header" >
+			<a href="#home" onclick="cerrarSesion()" data-icon="delete">Cerrar</a>
+			<h2></h2>
 		</div>
-		<div id="titulo-eventos" data-role="header" >
+		<div data-theme="b" id="titulo-eventos" data-role="header" >
+
 			<h1>ENRÓLATE EN UN EVENTO</h1>
 		</div>
 		<div data-role="content" data-theme="b">
@@ -281,7 +301,7 @@
 	</div>
 
 
-	<div data-role="page" data-theme="a" id="participantes" data-add-back-btn="true">
+	<div data-role="page" data-theme="c" id="participantes" data-add-back-btn="true">
 		<div data-role="header" >
 			<h1></h1>
 		</div>
@@ -332,14 +352,14 @@
 
 			   <!-- <a id="btn-enrolarme" href="#eventos" data-role="button" data-rel="back" data-theme="b" data-icon="check" data-inline="true" data-mini="true">Enrolarme</a> -->
 
-			    <a data-role="button"  data-theme="b" data-icon="check" data-inline="true" data-mini="true" href="https://twitter.com/intent/tweet?screen_name=contactuapp&text=No esta al aire y yo ya lo estoy usando =p %23QuedaEnContactU http://www.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>
+			    <a data-role="button"  data-theme="b" data-icon="check" data-inline="true" data-mini="true" href="https://twitter.com/intent/tweet?screen_name=contactuapp&text=ya está al aire la %23versiónBeta. Entra y %23QuedaEnContactU http://beta.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>
 
 			    <a id="btn-desbloquear" href="#eventos" data-role="button" data-rel="back" data-inline="true" data-mini="true">¡Ya! ;)</a>
 			</div>
 		
 			<section>
 				<article id="datos-q1">
-					<h4>En qué cosas ocupas mi tiempo actualmente:</h4>
+					<h4>En qué cosas ocupo mi tiempo actualmente:</h4>
 					<!--
 					<p>Hacer mermeladas, estar en un emprendimiento digital.</p>
 					-->

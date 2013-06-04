@@ -60,6 +60,7 @@ function displayProfiles(profiles) {
 
 	archivoRegistro = url_base + url_registroUsuario;
 	archivoExisteUsuario = url_base + url_existeusuario;
+	document.getElementById("msj-error").innerHTML="";
 
 	$.getJSON( archivoExisteUsuario, {email:dEmail})
 	.done(function(respuestaServerExiste) {
@@ -207,11 +208,12 @@ $('#formulario').submit(function() {
 			else{
 				$.mobile.changePage("#eventos");
 			}
+			document.getElementById("msj-error").innerHTML="";
 			//document.getElementById("t-nombre").innerHTML=datosUsuario;
 			//document.getElementById("evento-1").innerHTML=respuestaServer.numero;
 		  
 		}else{
-		  /// ejecutar una conducta cuando la validacion falla
+		  document.getElementById("msj-error").innerHTML="Correo electrónico o contraseña incorrectos";
 		}
   
 	})
@@ -222,7 +224,7 @@ $('#formulario').submit(function() {
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 	var f = new Date();
-	var fechaHoy = f.getFullYear() + "-" + (f.getMonth()+1) + "-" + f.getDate();
+	var fechaHoy = f.getFullYear() + "-" + (f.getMonth()+1) + "-" + (f.getDate()-1);
 	var datayear = Date.parse(fechaHoy);
 	archivoEventos = url_base + url_eventos;
 	archivoValidarRegistro = url_base + url_estaregistrado;
@@ -241,8 +243,9 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 			for (var i = 0; i < respuestaServer.registros.length; i++) {
 				var elemento = respuestaServer.registros[i];
 				var dataevent =  Date.parse(elemento['fecha']);
-				if (dataevent>datayear) {
-					$elmt_li = $('<li data-icon="plus"></li>');
+
+				if (dataevent>=datayear) {
+					$elmt_li = $('<li data-theme="a" data-icon="plus"></li>');
 					$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
 					$elmt_img = $('<img src="'+elemento['imagen']+'">');
 					$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
@@ -269,7 +272,7 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 				var elemento = respuestaServer.registros[i];
 				var dataevent =  Date.parse(elemento['fecha']);
 				if (dataevent<datayear) {
-					$elmt_li = $('<li data-icon="plus"></li>');
+					$elmt_li = $('<li data-theme="a" data-icon="plus"></li>');
 					$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
 					$elmt_img = $('<img src="'+elemento['imagen']+'">');
 					$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
@@ -296,10 +299,15 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
   
 	})
 
+	setTimeout(cambiarImgBotones,300);
+	
+	return false;			
 
+})
+
+function cambiarImgBotones() {
 	$.getJSON( archivoEventosUsuario, {email:localStorage["usermail"]})
 	.done(function(respuesta) {
-		
 		
 		if(respuesta.validacion == "ok"){
 			for (var i = 0; i < respuesta.eventos.length; i++) {
@@ -314,14 +322,20 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 		}else{
 		
 		}
-		$("#lista-eventos").listview('refresh');
+	//	$("#lista-eventos").listview('refresh');
 	//	$('#lista-eventos li a').trigger('create');
 
 	})
+}
 
-	return false;			
+function cerrarSesion(){
+	localStorage["usermail"]= "";
+	IN.User.logout(funcionAdicional);
+}
+function funcionAdicional(){
 
-})
+}
+
 
 
 
@@ -336,8 +350,8 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 			$('#lista-participantes li').remove();
 			for (var i = 0; i < respuestaServer.usuarios.length; i++) {
 				var elemento = respuestaServer.usuarios[i];
-				$elmt_lip = $('<li></li>');
-			
+				$elmt_lip = $('<li data-theme="d" ></li>');
+				
 				if ((i<3)||(elemento['desbloqueado']==1)||(elemento['email']==localStorage["usermail"])) {
 					
 					$elmt_ap = $('<a onclick="almaceneIdParticipante('+elemento['id_usuario']+','+i+')" href="#datos">');
@@ -399,7 +413,7 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 				}else{
 					$('#datos-top img').attr("src", elemento['avatar']);	
 					$elmt_hd = $('<h4>'+elemento['area']+'</h4>');
-					$elmt_btn = $('<a href="#des-contactu" onclick="almaceneIdContactu('+elemento['id']+')" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-theme="a">Desbloquear ContactU</a>');
+					$elmt_btn = $('<a data-theme="b" href="#des-contactu" onclick="almaceneIdContactu('+elemento['id']+')" data-rel="popup" data-position-to="window" data-transition="pop" data-role="button" data-theme="a">Desbloquear ContactU</a>');
 					//$elmt_a2 = $('<a href="https://twitter.com/intent/tweet?screen_name=zerolf&text=\'Voy a desbloquear un ContactU\' %23quedaenContactU http://www.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>');
 					$('#datos-top article').append($elmt_hd);
 					$('#datos-top article').append($elmt_btn);
