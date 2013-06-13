@@ -239,7 +239,14 @@ $('#formulario').submit(function() {
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
 	$("#loader-eventos").show();
 	var f = new Date();
-	var fechaHoy = f.getFullYear() + "-" + (f.getMonth()+1) + "-" + (f.getDate()-1);
+	var month;
+	if((f.getMonth()+1)<10){
+		month = "0"+(f.getMonth()+1);
+	}
+	else{
+		month = (f.getMonth()+1);
+	}
+	var fechaHoy = f.getFullYear() + "-" + month + "-" + (f.getDate()-1);
 	var datayear = Date.parse(fechaHoy);
 	archivoEventos = url_base + url_eventos;
 	archivoValidarRegistro = url_base + url_estaregistrado;
@@ -256,13 +263,15 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 			$('#lista-eventos').append($elmt_lidiv);
 
 			for (var i = 0; i < respuestaServer.registros.length; i++) {
-				var elemento = respuestaServer.registros[i];
+				
+				var elemento = respuestaServer.registros[i];				
 				var dataevent =  Date.parse(elemento['fecha']);
-
+				
 				if (dataevent>=datayear) {
 					$elmt_li = $('<li data-theme="a" data-icon="plus"></li>');
 					$elmt_a = $('<a id="evento-a'+i+'" onclick="almaceneIdEvento('+elemento['id']+')" href="#participantes"></a>');
 					$elmt_img = $('<img src="'+elemento['imagen']+'">');
+				
 					$elmt_h4 = $('<h4>'+elemento['nombre']+'</h4>');
 					$elmt_p = $('<p>'+elemento['fecha']+" - "+elemento['hora']+'</p>');
 					
@@ -405,7 +414,6 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 $( "#datos" ).on( "pageshow", function( event, ui ) {
 	$("#loader-datos").show();
   	archivoParticipante = url_base + url_datosParticipante;
-
   	$('#datos-top article').empty();
   	$('#datos-q1 p').empty();
   	$('#datos-q2 p').empty();
