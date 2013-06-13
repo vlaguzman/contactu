@@ -28,6 +28,7 @@ var pos_lista = 0;
 
 $(document).ready(
 		function(){
+			$("#loader-home").hide();
 			var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 			var is_chrome= navigator.userAgent.toLowerCase().indexOf('chrome/') > -1;
 			$('#linkedin-safari img').hide();
@@ -62,6 +63,7 @@ function onLinkedInAuth() {
 }
 
 function displayProfiles(profiles) {
+	$("#loader-home").show();
     member = profiles.values[0];
      
     var dNombre = member.firstName + " " + member.lastName;
@@ -83,7 +85,9 @@ function displayProfiles(profiles) {
 
 	$.getJSON( archivoExisteUsuario, {email:dEmail})
 	.done(function(respuestaServerExiste) {
+
 		if(respuestaServerExiste.validacion == "ok"){
+			$("#loader-home").hide();
 			existe = true;
 			localStorage["usermail"]= dEmail;
 			//user = dEmail;
@@ -97,6 +101,7 @@ function displayProfiles(profiles) {
 	if(!existe){
 		$.getJSON( archivoRegistro, { nombre:dNombre,email:dEmail,twitter:dTwitter,linkedin:dLinkedin,telefono:dTelefono,areas:dAreas,password:dPassword,picture:dPicture})
 		.done(function(respuestaServer) {
+			$("#loader-home").hide();
 			if(respuestaServer.validacion == "ok"){
 				//user = dEmail;
 				console.log("presente");
