@@ -8,6 +8,8 @@
 #home img:nth-child(2){
 	margin: 5px auto;
 }
+
+
 #home #login{
 	margin: 15px auto 8px;
 	text-align: center;
@@ -30,6 +32,16 @@
 	margin: 5px;
 }
 
+#linkedin-safari{
+	height: 50%;
+	width: 50%;
+}
+
+#linkedin-safari img{
+	width: 125px;
+
+}
+
 /* div titulo eventos*/
 #titulo-eventos {
 	height: 42px;
@@ -37,7 +49,6 @@
 }
 #eventos .ui-header .ui-title{
 	margin: 14px 0;
-
 }
 
 /* Arreglos del footer*/
@@ -56,6 +67,16 @@
 
 .ui-btn-icon-notext .ui-btn-inner {
 	height: 0;
+}
+/* Loaders */
+
+#loader-eventos,
+#loader-participantes,
+#loader-datos{
+	position: absolute;
+	margin-top: 160px;
+	margin-left: 50%;
+	z-index: 10;
 }
 
 /* Arreglos datos de los usuarios */
@@ -88,4 +109,9 @@
 #form-registro textarea:focus:invalid{
     box-shadow: 0 0 5px #d45252;
     border-color: #b03535
+}
+
+/* Boton desbloqueo datos  */
+#btn-desbloquear{
+	
 }

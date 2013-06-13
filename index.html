@@ -16,11 +16,11 @@
 
 <link rel="stylesheet" type="text/css" href="css/estilos_basicos.css">
 <link href='http://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
-
 <!-- SHA3 -->
 <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
 
-<!-- Login LinkedIn -->
+
+<!-- Login LinkedIn  -->
 <script src="http://platform.linkedin.com/in.js" type="text/javascript">
         api_key: nyvx5ricm4ew
         onLoad: onLinkedInLoad
@@ -33,6 +33,7 @@
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 
 <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+<script src="https://da189i1jfloii.cloudfront.net/js/kinvey-phonegap-0.9.14.min.js"></script>
 <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
 
 <!--
@@ -52,11 +53,18 @@
 			<img src="img/logo.png">
 			<!--<img src="img/copy.png">-->
 			<h1 id="bumperstick">Hacemos visibles ContactUs Efectivos</h1>
+
 			<div id="login">
 				<script type="IN/Login"></script>
 			</div>
+
+			<!--
+			<a id="linkedin-safari" class="brand" href="https://www.facebook.com/contactuapp" target="_blank"> 
+	       		<img src="img/linkedin-button.png"/> 
+	      	</a>-->
+
+			
 			<div id="msj-error">
-				
 			</div>
 			<form id="formulario" >
       
@@ -186,7 +194,7 @@
 
 
 	<div data-role="page" data-theme="c" id="eventos">
-	
+		
 		<div data-theme="a" data-role="header" >
 			<a href="#home" onclick="cerrarSesion()" data-icon="delete">Cerrar</a>
 			<h2></h2>
@@ -196,6 +204,7 @@
 			<h1>ENRÓLATE EN UN EVENTO</h1>
 		</div>
 		<div data-role="content" data-theme="b">
+			<div id="loader-eventos"><img src="img/loader.gif" /></div>
 			<ul id="lista-eventos" data-role="listview"  data-theme="c" >
 			 	
 			<!--	<li data-icon="plus">
@@ -259,9 +268,6 @@
 				
 				<form id="form-preguntas2" >
 	      
-	      			<label for="pregunta4"> ¿Hay algún tema del que no quisieras hablar? </label>
-	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
-	      
 	      			<label for="pregunta5">¿Qué perfil específico estás buscando?</label>
 	      			<select id="pregunta5" name="pregunta5" data-native-menu="false">
 						<option value="Administración/Negocios">Administración/Negocios</option>
@@ -289,6 +295,9 @@
 						<option value="Nada en particular">Nada en particular</option>
 		
 					</select>
+
+					<label for="pregunta4">Usa este espacio para detallar una de las respuestas anteriores o cuéntanos si hay algo de lo que NO quisieras hablar durante el networking.</label>
+	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
 	      			
 	      			<input type="submit" value="Listo!" id="botonpreguntas"/>
 
@@ -306,6 +315,7 @@
 			<h1></h1>
 		</div>
 		<div data-role="content" data-theme="b">
+			<div id="loader-participantes"><img src="img/loader.gif" /></div>
 			<ul id="lista-participantes" data-role="listview" data-theme="c" data-filter="true" data-filter-placeholder="Buscar Contactus">
 				<!-- <li>
 					<a href="#datos">
@@ -336,6 +346,7 @@
 			<h1></h1>
 		</div>
 		<div data-role="content" data-theme="b">
+			<div id="loader-datos"><img src="img/loader.gif" /></div>
 			<article id="datos-top">
 				<img>
 				<article>
@@ -352,7 +363,7 @@
 
 			   <!-- <a id="btn-enrolarme" href="#eventos" data-role="button" data-rel="back" data-theme="b" data-icon="check" data-inline="true" data-mini="true">Enrolarme</a> -->
 
-			    <a data-role="button"  data-theme="b" data-icon="check" data-inline="true" data-mini="true" href="https://twitter.com/intent/tweet?screen_name=contactuapp&text=ya está al aire la %23versiónBeta. Entra y %23QuedaEnContactU http://beta.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>
+			    <a data-role="button" onclick="mostrarBtnDesbloquear()" data-theme="b" data-icon="check" data-inline="true" data-mini="true" href="https://twitter.com/intent/tweet?screen_name=contactuapp&text=ya está al aire la %23versiónBeta. Entra y %23QuedaEnContactU http://beta.contactu.co/" data-lang="es" data-size="large" data-related="conectandoments">Desbloquear con un tweet</a>
 
 			    <a id="btn-desbloquear" href="#eventos" data-role="button" data-rel="back" data-inline="true" data-mini="true">¡Ya! ;)</a>
 			</div>
@@ -377,7 +388,7 @@
 					-->
 				</article>
 				<article id="datos-q4">
-					<h4>Temas de los que prefiero no hablar en el evento:</h4>
+					<h4>Información adicional:</h4>
 					<!--
 					<p>Hacer mermeladas, estar en un emprendimiento digital.</p>
 					-->
@@ -403,6 +414,25 @@
 	</div>
 
 <script type="text/javascript" src="js/micodigo.js"> </script>
+<!-- 
+	código Kinvey
+<script type="text/javascript" src="js/oauth.js"> </script>
+-->
+  <!-- Analytics -->
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-40633893-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
 
 </body>
 

@@ -1,7 +1,9 @@
 
 // #70B3A0 verde superior - #F98800 naranja
 const url_base = "http://www.contactu.co/demoday/";
-//const url_base = "http://localhost:8888/contactu/";
+//const url_base_local = "http://localhost:8888/contactu/";
+const url_base_beta = "http://beta.contactu.co/";
+
 const url_eventos = "demeeventos.php?jsoncallback=?"
 const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
 const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
@@ -22,6 +24,19 @@ var id_asistente = 0;
 var id_contactu = 0;
 var pos_lista = 0;
 
+
+$(document).ready(
+		function(){
+			var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
+			var is_chrome= navigator.userAgent.toLowerCase().indexOf('chrome/') > -1;
+			$('#linkedin-safari img').hide();
+			if (is_safari && !is_chrome){
+			 	$('#login').hide();
+			 	//$('#linkedin-safari img').show();
+			 	//$('#linkedin-safari img').trigger('create');
+			}
+		}
+);
 
 
 function validatePass(p1, p2) {
@@ -86,7 +101,7 @@ function displayProfiles(profiles) {
 				$('#i-datos-top img').attr("src", elemento['imagen']);
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 		 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-		 		$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+		 		$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
 		 		$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
 		 		$('#i-datos-top article').append($elmt_hd);
@@ -122,7 +137,7 @@ function displayProfiles(profiles) {
 	// 		$('#i-datos-top img').attr("src", elemento['imagen']);
 	// 		$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 	// 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-	// 		$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+	// 		$elmt_p2 = $('<p>Twitter'+elemento['twitter']+'</p>');
 	// 		$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
 	// 		$('#i-datos-top article').append($elmt_hd);
@@ -196,7 +211,7 @@ $('#formulario').submit(function() {
 				$('#i-datos-top img').attr("src", elemento['imagen']);
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 				$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-				$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+				$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
 				$elmt_p3 = $('<p>'+elemento['email']+'</p>');
 
 				$('#i-datos-top article').append($elmt_hd);
@@ -222,7 +237,7 @@ $('#formulario').submit(function() {
 })
 
 $( "#eventos" ).on( "pageshow", function( event, ui ) {
-
+	$("#loader-eventos").show();
 	var f = new Date();
 	var fechaHoy = f.getFullYear() + "-" + (f.getMonth()+1) + "-" + (f.getDate()-1);
 	var datayear = Date.parse(fechaHoy);
@@ -233,7 +248,7 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 
 	$.getJSON( archivoEventos, { })
 	.done(function(respuestaServer) {
-		
+		$("#loader-eventos").hide();
 		if(respuestaServer.validacion == "ok"){
 			$('#lista-eventos li').remove();
 
@@ -336,15 +351,19 @@ function funcionAdicional(){
 
 }
 
+function mostrarBtnDesbloquear(){
+	$("#btn-desbloquear").show();
+}
 
 
 
 $( "#participantes" ).on( "pageshow", function( event, ui ) {
-
+	$("#loader-participantes").show();
   	archivoParticipantes = url_base + url_asistentes;
 	
 	$.getJSON( archivoParticipantes, {idevento: id_evento, email: localStorage["usermail"]})
 	.done(function(respuestaServer) {
+		$("#loader-participantes").hide();
 		if(respuestaServer.validacion == "ok"){
 			
 			$('#lista-participantes li').remove();
@@ -384,6 +403,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 })
 
 $( "#datos" ).on( "pageshow", function( event, ui ) {
+	$("#loader-datos").show();
   	archivoParticipante = url_base + url_datosParticipante;
 
   	$('#datos-top article').empty();
@@ -395,15 +415,16 @@ $( "#datos" ).on( "pageshow", function( event, ui ) {
 	$('#datos-q6 p').empty();
 	$.getJSON( archivoParticipante, {id_usuario: id_asistente, evento: id_evento, email:localStorage["usermail"]})
 	.done(function(respuestaServer) {
+		$("#loader-datos").hide();
 		if(respuestaServer.validacion == "ok"){
 			
 				var elemento = respuestaServer.datos[0];
-				
+				console.log("micodijo.js" + elemento['email']);
 				if ((pos_lista<3)||(elemento['desbloqueado']==1)||(elemento['email']==localStorage["usermail"])) {
 					$('#datos-top img').attr("src", elemento['foto']);
 					$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 					$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-					$elmt_p2 = $('<p>@'+elemento['twitter']+'</p>');
+					$elmt_p2 = $('<p>Twitter: '+elemento['twitter']+'</p>');
 					$elmt_p3 = $('<p>'+elemento['correo']+'</p>');
 
 					$('#datos-top article').append($elmt_hd);
@@ -485,6 +506,7 @@ function almaceneIdParticipante(id_prt, pos){
 
 function almaceneIdContactu(id_ctu){
 	id_contactu = id_ctu;
+	$("#btn-desbloquear").hide();
 	
 }
 

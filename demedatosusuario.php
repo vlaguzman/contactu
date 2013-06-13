@@ -57,12 +57,12 @@ if($query_datosusuario)
 			$temp = mysql_query($consulta2, $conexion) or die ('Error en SQL: '.$consulta2);
 			if($temp)
 				{
-					$desbloqueado = 8;
+
 					if(mysql_num_rows($temp)){
-						$desbloqueado = 9;
+						
 						while ($otroRegistro = mysql_fetch_assoc($temp)) {
-							$desbloqueado = 11;
-							if ($otroRegistro['id_user2']==$unRegistro['id']) {
+							
+							if ($otroRegistro['id_user2']==$id_usuario) {
 							 	$desbloqueado = 1;
 							 } 
 
