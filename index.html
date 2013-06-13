@@ -67,12 +67,9 @@
 			<div id="msj-error">
 			</div>
 			<form id="formulario" >
-      
       			<input data-theme="b" type="email" id="nombredeusuario" name="nombredeusuario" placeholder="Email" required>
      			<input data-theme="b" type="password" id="clave" name="clave" placeholder="Contraseña" >
- 
       			<input data-theme="b" type="submit" value="Iniciar Sesión" id="botonLogin">
-      
     		</form>	
 	
 	 		<a data-theme="b" href="#registro" data-role="button" data-theme="a"> Registrarse </a>
@@ -146,6 +143,29 @@
 
 	</div>
 
+	<div data-role="page" data-theme="a" id="registro-pass">
+		<div data-role="header">
+			<h1>Registro</h1>
+		</div>
+		<div data-role="content" data-theme="b">
+			<form id="form-registro-pass">
+				
+				<h3>Para terminar el registro ingresa una contraseña.</h3>
+				
+                <label for="password">Password</label><input type='password' id='p1-lk' required>
+                <label for="password">Confirm Password</label><input type='password' onfocus="validatePass(document.getElementById('p1-lk'), this);" oninput="validatePass(document.getElementById('p1-lk'), this);" required>
+
+
+				<input type="submit" value="enviar" id="botonPass"/>
+			</form>
+
+		</div>	
+		<div data-role="footer" class="ui-bar">
+			<h4>www.contactu.co</h4>		
+		</div>
+
+	</div>
+
 	<div data-role="page" data-theme="a" id="iniciar">
 		<div data-role="header">
 			<h1>ContactU</h1>
@@ -172,9 +192,7 @@
 	      			<label for="pregunta1"> ¿En qué cosas ocupas tu tiempo actualmente? </label>
 	      			<!--<span class="counter">200</span> -->
 	      			<textarea id="pregunta1" name="pregunta1" maxlength="200" placeholder="200 caracteres"></textarea>
-	      
 	      			<label for="pregunta3"> ¿Qué le puedes aportar a otras personas? </label>
-	      			
 	      			<textarea id="pregunta3" name="pregunta3" maxlength="200" placeholder="200 caracteres"></textarea>
 	      			
 	      			<label for="pregunta2"> Intereses (etiquetas). Así sabrás de qué más puedes hablar con otros participantes.</label>
@@ -297,7 +315,7 @@
 					</select>
 
 					<label for="pregunta4">Usa este espacio para detallar una de las respuestas anteriores o cuéntanos si hay algo de lo que NO quisieras hablar durante el networking.</label>
-	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres"></textarea>
+	      			<textarea id="pregunta4" name="pregunta4" maxlength="200" placeholder="200 caracteres" required></textarea>
 	      			
 	      			<input type="submit" value="Listo!" id="botonpreguntas"/>
 
@@ -341,7 +359,7 @@
 
 	</div>
 
-	<div data-role="page" data-theme="a" id="datos" data-add-back-btn="true">
+	<div data-role="page" data-theme="a" id="datos" data-add-back-btn="true" data-add-back-btn="true">
 		<div data-role="header">
 			<h1></h1>
 		</div>

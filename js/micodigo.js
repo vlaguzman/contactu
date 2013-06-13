@@ -2,7 +2,7 @@
 // #70B3A0 verde superior - #F98800 naranja
 const url_base = "http://www.contactu.co/demoday/";
 //const url_base_local = "http://localhost:8888/contactu/";
-const url_base_beta = "http://beta.contactu.co/";
+//const url_base_beta = "http://beta.contactu.co/";
 
 const url_eventos = "demeeventos.php?jsoncallback=?"
 const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
@@ -16,6 +16,7 @@ const url_desbloquear = "desbloquearusuario.php?jsoncallback=?";
 const url_estaregistrado = "estaregistrado.php?jsoncallback=?";
 const url_eventosxusuario = "eventosxusuario.php?jsoncallback=?";
 const url_existeusuario = "existeusuario.php?jsoncallback=?";
+const url_actualizarPass = "actualizarPass.php?jsoncallback=?";
 
 var user;
 var id_evento = 0;
@@ -65,7 +66,10 @@ function displayProfiles(profiles) {
      
     var dNombre = member.firstName + " " + member.lastName;
 	var dEmail = member.emailAddress;
-	var dTwitter = member.primaryTwitterAccount.providerAccountName;	
+	console.log(member.primaryTwitterAccount != 'undefined');
+	if(member.primaryTwitterAccount != undefined){
+		var dTwitter = member.primaryTwitterAccount.providerAccountName;	
+	}
 	var dLinkedin = "";
 	var dTelefono = "";	
 	var dAreas = member.industry;
@@ -95,9 +99,11 @@ function displayProfiles(profiles) {
 		.done(function(respuestaServer) {
 			if(respuestaServer.validacion == "ok"){
 				//user = dEmail;
+				console.log("presente");
 				localStorage["usermail"]= dEmail;
 
-				$.mobile.changePage("#iniciar");
+				$.mobile.changePage("#registro-pass");
+
 				$('#i-datos-top img').attr("src", elemento['imagen']);
 				$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
 		 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
@@ -120,45 +126,31 @@ function displayProfiles(profiles) {
 	var datosUsuario = dEmail;
 	var datosPassword = dPassword;
 
- // 	archivoValidacion = url_base + url_validacionUsuario;
-			
-	// $.getJSON( archivoValidacion, { usuario:datosUsuario ,password:datosPassword})
-	// .done(function(respuestaServer) {
-				
-	// if(respuestaServer.validacion == "ok"){
-					
-	// 	/// si la validacion es correcta, muestra la pantalla "home"
-	// 	user = datosUsuario;
-	// 	pass = datosPassword;
-	// 	var elemento = respuestaServer.usuario[0];
-	// 	if(elemento['mostrarPreguntas'] == 1){
-	// 		$.mobile.changePage("#iniciar");
-
-	// 		$('#i-datos-top img').attr("src", elemento['imagen']);
-	// 		$elmt_hd = $('<h4>'+elemento['nombre']+'</h4>');
-	// 		$elmt_p1 = $('<p>'+elemento['area']+'</p>');
-	// 		$elmt_p2 = $('<p>Twitter'+elemento['twitter']+'</p>');
-	// 		$elmt_p3 = $('<p>'+elemento['email']+'</p>');
-
-	// 		$('#i-datos-top article').append($elmt_hd);
-	// 		$('#i-datos-top article').append($elmt_p1);
-	// 		$('#i-datos-top article').append($elmt_p2);
-	// 		$('#i-datos-top article').append($elmt_p3);
-
-	// 	}
-	// 	else{
-	// 		$.mobile.changePage("#eventos");
-	// 	}
-	// 				//document.getElementById("t-nombre").innerHTML=datosUsuario;
-	// 				//document.getElementById("evento-1").innerHTML=respuestaServer.numero;  
-	// 	}else{
-	// 	  /// ejecutar una conducta cuando la validacion falla
-	// 	}
-		  
-	// })
 	return false;
 
 }
+
+
+$('#form-registro-pass').submit(function() { 	
+	var dPassword =  $("#p1-lk").val();
+
+  	archivoActualizarPass = url_base + url_actualizarPass;
+
+	$.getJSON( archivoActualizarPass, {password:dPassword, email:localStorage["usermail"]})
+	.done(function(respuestaServer) {
+
+		if(respuestaServer.validacion == "ok"){
+		 	$.mobile.changePage("#iniciar");
+		}else{
+		  /// ejecutar una conducta cuando la validacion falla
+		}
+  
+	})
+
+	
+	return false;
+})
+
 
 $('#form-registro').submit(function() { 
 	// recolecta los valores que inserto el usuario
@@ -340,8 +332,6 @@ function cambiarImgBotones() {
 		 		idBtn = "#btn-enrl-"+elemento['id_evento'];
         	//	document.getElementById(idBtn).style.backgroundImage = newImage;
         		$("#btn-enrl-"+elemento['id_evento']).removeClass("links-plus").addClass("links-registrado");
-        	
-
 			};
 		}else{
 		
