@@ -5,6 +5,7 @@ const url_base = "http://www.contactu.co/demoday/";
 //const url_base_beta = "http://beta.contactu.co/";
 
 const url_eventos = "demeeventos.php?jsoncallback=?"
+const url_datosEvento = "demedatosevento.php?jsoncallback=?"
 const url_asistentes = "demeasistentesxevento.php?jsoncallback=?";
 const url_datosParticipante = "demedatosusuario.php?jsoncallback=?";
 const url_validacionUsuario = "validacion_de_datos.php?jsoncallback=?";
@@ -25,10 +26,10 @@ var id_asistente = 0;
 var id_contactu = 0;
 var pos_lista = 0;
 
+$("#loader-home").hide();
 
 $(document).ready(
 		function(){
-			$("#loader-home").hide();
 			var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 			var is_chrome= navigator.userAgent.toLowerCase().indexOf('chrome/') > -1;
 			$('#linkedin-safari img').hide();
@@ -65,7 +66,6 @@ function onLinkedInAuth() {
 function displayProfiles(profiles) {
 	$("#loader-home").show();
     member = profiles.values[0];
-     
     var dNombre = member.firstName + " " + member.lastName;
 	var dEmail = member.emailAddress;
 	console.log(member.primaryTwitterAccount != 'undefined');
@@ -82,7 +82,6 @@ function displayProfiles(profiles) {
 	archivoRegistro = url_base + url_registroUsuario;
 	archivoExisteUsuario = url_base + url_existeusuario;
 	document.getElementById("msj-error").innerHTML="";
-
 	$.getJSON( archivoExisteUsuario, {email:dEmail})
 	.done(function(respuestaServerExiste) {
 
@@ -123,14 +122,11 @@ function displayProfiles(profiles) {
 			}else{
 		  /// ejecutar una conducta cuando la validacion falla
 			}
-  
 		})
-
 	}
 	
 	var datosUsuario = dEmail;
 	var datosPassword = dPassword;
-
 	return false;
 
 }
@@ -138,21 +134,15 @@ function displayProfiles(profiles) {
 
 $('#form-registro-pass').submit(function() { 	
 	var dPassword =  $("#p1-lk").val();
-
   	archivoActualizarPass = url_base + url_actualizarPass;
-
 	$.getJSON( archivoActualizarPass, {password:dPassword, email:localStorage["usermail"]})
 	.done(function(respuestaServer) {
-
 		if(respuestaServer.validacion == "ok"){
 		 	$.mobile.changePage("#iniciar");
 		}else{
 		  /// ejecutar una conducta cuando la validacion falla
 		}
-  
 	})
-
-	
 	return false;
 })
 
@@ -255,14 +245,15 @@ $( "#eventos" ).on( "pageshow", function( event, ui ) {
 		$("#loader-eventos").hide();
 		if(respuestaServer.validacion == "ok"){
 			$('#lista-eventos li').remove();
-
+			
 			$elmt_lidiv = $('<li data-role="list-divider">Eventos Futuros</li>');
 			$('#lista-eventos').append($elmt_lidiv);
 
 			for (var i = 0; i < respuestaServer.registros.length; i++) {
 				
-				var elemento = respuestaServer.registros[i];				
-				var dataevent =  Date.parse(elemento['fecha']);
+				var elemento = respuestaServer.registros[i];
+							
+				var dataevent = Date.parse(elemento['fecha']);
 				
 				if (dataevent>=datayear) {
 					$elmt_li = $('<li data-theme="a" data-icon="plus"></li>');
@@ -364,7 +355,38 @@ function mostrarBtnDesbloquear(){
 $( "#participantes" ).on( "pageshow", function( event, ui ) {
 	$("#loader-participantes").show();
   	archivoParticipantes = url_base + url_asistentes;
+  	archivoDatosEvento = url_base + url_datosEvento;
+
+	//$('#event-header h3').empty();
+	//$('#event-header p').empty();
+
+  	$.getJSON( archivoDatosEvento, {idevento: id_evento})
+	.done(function(resp) {
 	
+		if(resp.validacion == "ok"){
+			var elemento = resp.registros[0];
+
+			document.getElementById("event-header-h3").innerHTML=elemento['nombre'];
+			document.getElementById("event-header-p1").innerHTML=elemento['descripcion'];
+			document.getElementById("event-header-p2").innerHTML=elemento['fecha']+' - '+elemento['hora'];
+			document.getElementById("event-header-p3").innerHTML=elemento['lugar'];
+
+			//$elmt_hd = $('<h3>'+elemento['nombre']+'</h4>');
+			//$elmt_p1 = $('<p>'+elemento['descripcion']+'</p>');
+			//$elmt_p2 = $('<p>'+elemento['fecha']+' - '+elemento['hora']+'</p>');
+			//$elmt_p3 = $('<p>'+elemento['lugar']+'</p>');
+
+			//$('#event-header').append($elmt_hd);
+			//$('#event-header').append($elmt_p1);
+			//$('#event-header').append($elmt_p2);
+			//$('#event-header').append($elmt_p3);
+
+		}else{
+
+		}
+	
+	})
+
 	$.getJSON( archivoParticipantes, {idevento: id_evento, email: localStorage["usermail"]})
 	.done(function(respuestaServer) {
 		$("#loader-participantes").hide();
@@ -402,6 +424,7 @@ $( "#participantes" ).on( "pageshow", function( event, ui ) {
 		}
 		$("#lista-participantes").listview('refresh');  
 	})
+
 	return false;			
 
 })
