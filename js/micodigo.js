@@ -26,16 +26,18 @@ var id_asistente = 0;
 var id_contactu = 0;
 var pos_lista = 0;
 
-$("#loader-home").hide();
+$('#loader-home').hide();
+$('#login-safari').hide();
 
 $(document).ready(
 		function(){
 			var is_safari = navigator.userAgent.toLowerCase().indexOf('safari/') > -1;
 			var is_chrome= navigator.userAgent.toLowerCase().indexOf('chrome/') > -1;
-			$('#linkedin-safari img').hide();
-			if (is_safari && !is_chrome){
+			//$('#linkedin-safari img').hide();
+			$('#login-safari').hide();
+			if (is_safari && (!is_chrome)){
 			 	$('#login').hide();
-			 	//$('#linkedin-safari img').show();
+			 	$('#login-safari').show();
 			 	//$('#linkedin-safari img').trigger('create');
 			}
 		}
@@ -68,7 +70,6 @@ function displayProfiles(profiles) {
     member = profiles.values[0];
     var dNombre = member.firstName + " " + member.lastName;
 	var dEmail = member.emailAddress;
-	console.log(member.primaryTwitterAccount != 'undefined');
 	if(member.primaryTwitterAccount != undefined){
 		var dTwitter = member.primaryTwitterAccount.providerAccountName;	
 	}
@@ -82,6 +83,13 @@ function displayProfiles(profiles) {
 	archivoRegistro = url_base + url_registroUsuario;
 	archivoExisteUsuario = url_base + url_existeusuario;
 	document.getElementById("msj-error").innerHTML="";
+	loginLinkedin(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword,dLinkedin,dTelefono);
+	return false;
+
+}
+
+function loginLinkedin(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword,dLinkedin,dTelefono){
+
 	$.getJSON( archivoExisteUsuario, {email:dEmail})
 	.done(function(respuestaServerExiste) {
 
@@ -127,7 +135,6 @@ function displayProfiles(profiles) {
 	
 	var datosUsuario = dEmail;
 	var datosPassword = dPassword;
-	return false;
 
 }
 
