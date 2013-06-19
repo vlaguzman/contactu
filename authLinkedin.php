@@ -155,3 +155,4 @@ function fetch($method, $resource, $body = '') {
 	// Native PHP object, please
 	return json_decode($response);
 }
+?>

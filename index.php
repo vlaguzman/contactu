@@ -1,14 +1,4 @@
 <!DOCTYPE HTML>
-<?php
-	if (isset($_GET['fname'])) {
-		$twitter = $_GET['twitter'];
-		$name = $_GET['fname'] . " ". $_GET['lname']; 
-		$industry = $_GET['industry']; 
-		$email = $_GET['email']; 
-		$photo = $_GET['photo'];
-		echo "<script src='js/micodigo.js' language='javascript'>sayHola();</script>";
-	} 
-?>
 <html>
 <head>
 <meta charset="UTF-8">	
@@ -37,6 +27,7 @@
         authorize: false
         lang:  es_ES
 </script>
+
 
 <!-- Twitter compartir frases -->
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
@@ -451,6 +442,23 @@
 	</div>
 
 <script type="text/javascript" src="js/micodigo.js"> </script>
+<?php
+	if (isset($_GET['fname'])) {
+		$twitter = $_GET['twitter'];
+		$name = $_GET['fname']." ".$_GET['lname']; 
+		$industry = $_GET['industry']; 
+		$email = $_GET['email']; 
+		$photo = $_GET['photo'];
+		?>
+		<script> 
+			loginLinkedinP('<? echo $name?>','<? echo $email?>','<? echo $twitter?>','<? echo $industry?>','<? echo $photo?>','<? echo $email?>');
+		</script>
+		<?php
+	} 
+?>
+
+
+
 <!-- 
 	código Kinvey
 <script type="text/javascript" src="js/oauth.js"> </script>

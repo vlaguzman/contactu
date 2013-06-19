@@ -59,6 +59,11 @@ function onLinkedInLoad() {
      IN.Event.on(IN, "auth", onLinkedInAuth);
 }
 
+
+function sayHola(vari, vari2) {
+	alert(vari2 + 'oh yeye ' + vari);
+}
+
 function onLinkedInAuth() {
      IN.API.Profile("me")
      .fields("firstName", "lastName", "industry", "emailAddress", "primaryTwitterAccount", "pictureUrl")
@@ -73,22 +78,29 @@ function displayProfiles(profiles) {
 	if(member.primaryTwitterAccount != undefined){
 		var dTwitter = member.primaryTwitterAccount.providerAccountName;	
 	}
-	var dLinkedin = "";
-	var dTelefono = "";	
+
 	var dAreas = member.industry;
 	var dPassword = member.emailAddress;
 	var dPicture = member.pictureUrl;
 	var existe = false;
 
-	archivoRegistro = url_base + url_registroUsuario;
-	archivoExisteUsuario = url_base + url_existeusuario;
-	document.getElementById("msj-error").innerHTML="";
-	loginLinkedin(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword,dLinkedin,dTelefono);
+
+	loginLinkedinP(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword);
 	return false;
 
 }
 
+function loginLinkedinP(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword){
+	var dLinkedin = "";
+	var dTelefono = "";	
+	loginLinkedin(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword,dLinkedin,dTelefono);
+	
+}
+
 function loginLinkedin(dNombre,dEmail,dTwitter,dAreas,dPicture,dPassword,dLinkedin,dTelefono){
+	archivoRegistro = url_base + url_registroUsuario;
+	archivoExisteUsuario = url_base + url_existeusuario;
+	document.getElementById("msj-error").innerHTML="";
 
 	$.getJSON( archivoExisteUsuario, {email:dEmail})
 	.done(function(respuestaServerExiste) {
